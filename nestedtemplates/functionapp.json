@@ -33,7 +33,7 @@
         "name": "[variables('appInsightsName')]",
         "type": "Microsoft.Insights/components",
         "kind": "web",
-        "location": "[variables('location')]",
+        "location": "[parameters('location')]",
         "tags": {
             "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('functionAppName'))]": "Resource"
         },
@@ -46,7 +46,7 @@
         "apiVersion": "2015-08-01",
         "type": "Microsoft.Web/sites",
         "name": "[variables('functionAppName')]",
-        "location": "[variables('location')]",
+        "location": "[parameters('location')]",
         "identity": {
             "type": "SystemAssigned"
         },
