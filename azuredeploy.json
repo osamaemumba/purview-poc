@@ -157,7 +157,7 @@
             "location": {
                 "value": "[parameters('location')]"
             },
-            "keyVaultName": {
+            "purviewAccountName": {
                 "value": "[variables('purviewAccountName')]"
             }
         }
