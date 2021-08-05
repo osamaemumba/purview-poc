@@ -13,9 +13,7 @@
         "functionAppName": "[concat('funcapp', uniqueString(resourceGroup().id))]",
         "appInsightsName": "[variables('functionAppName')]",
         "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'azfunctions')]",
-        "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
-        "functionName1": "configurePurview",
-        "functionName2": "deletePurview"
+        "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
       },
   "resources": [ 
     {
