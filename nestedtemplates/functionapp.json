@@ -81,38 +81,6 @@
                 ]
             }
         }
-    },
-    {
-      "type": "Microsoft.Web/sites/functions",
-      "apiVersion": "2020-06-01",
-      "name": "[format('{0}/{1}', variables('functionAppName'), variables('functionName'))]",
-      "properties": {
-        "config": {
-            "bindings": [
-                {
-                  "authLevel": "function",
-                  "type": "httpTrigger",
-                  "direction": "in",
-                  "name": "req",
-                  "methods": [
-                    "get",
-                    "post"
-                  ]
-                },
-                {
-                  "type": "http",
-                  "direction": "out",
-                  "name": "res"
-                }
-              ]
-        },
-        "files": {
-          "index.js": "[concat('module.exports = async function (context, req) {\n    context.log(\"JavaScript HTTP trigger function processed a request.\");\n\n    const name = (req.query.name || (req.body && req.body.name));\n    const responseMessage = name\n        ? \"Hello, \" + name + \". This HTTP triggered function executed successfully.\"\n        : \"This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response. ', parameters('testParam') ,' is testParam\";\n\n    context.res = {\n        // status: 200, /* Defaults to 200 */\n        body: responseMessage\n    };\n}')]"
-        }
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
-      ]
     }
   ],
   "outputs": {
