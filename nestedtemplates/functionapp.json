@@ -1,0 +1,124 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "location": {
+        "type": "string",
+        "metadata": {
+          "description": "Specifies the Azure location where the key vault should be created."
+        }
+      }
+    },
+      "variables": {
+        "functionAppName": "[concat('funcapp', uniqueString(resourceGroup().id))]",
+        "appInsightsName": "[variables('functionAppName')]",
+        "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'azfunctions')]",
+        "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+        "functionName1": "configurePurview",
+        "functionName2": "deletePurview"
+      },
+  "resources": [ 
+    {
+        "type": "Microsoft.Storage/storageAccounts",
+        "name": "[variables('storageAccountName')]",
+        "apiVersion": "2019-06-01",
+        "location": "[parameters('location')]",
+        "kind": "StorageV2",
+        "sku": {
+            "name": "Standard_LRS"
+        }
+    },
+    {
+        "apiVersion": "2015-05-01",
+        "name": "[variables('appInsightsName')]",
+        "type": "Microsoft.Insights/components",
+        "kind": "web",
+        "location": "[variables('location')]",
+        "tags": {
+            "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('functionAppName'))]": "Resource"
+        },
+        "properties": {
+            "Application_Type": "web",
+            "ApplicationId": "[variables('appInsightsName')]"
+        }
+    },
+    {
+        "apiVersion": "2015-08-01",
+        "type": "Microsoft.Web/sites",
+        "name": "[variables('functionAppName')]",
+        "location": "[variables('location')]",
+        "identity": {
+            "type": "SystemAssigned"
+        },
+        "kind": "functionapp",
+        "dependsOn": [
+            "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+            "[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]"
+        ],
+        "properties": {
+            "siteConfig": {
+                "appSettings": [
+                    {
+                        "name": "AzureWebJobsStorage",
+                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountId'),'2019-06-01').keys[0].value)]"
+                    },
+                    {
+                        "name": "FUNCTIONS_WORKER_RUNTIME",
+                        "value": "node"
+                    },
+                    {
+                        "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                        "value": "[reference(resourceId('microsoft.insights/components/', variables('appInsightsName')), '2015-05-01').InstrumentationKey]"
+                    },
+                    {
+                        "name": "FUNCTIONS_EXTENSION_VERSION",
+                        "value": "~3"
+                    },
+                    {
+                        "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                        "value": "10.14.1"
+                    }
+                ]
+            }
+        }
+    },
+    {
+      "type": "Microsoft.Web/sites/functions",
+      "apiVersion": "2020-06-01",
+      "name": "[format('{0}/{1}', variables('functionAppName'), variables('functionName'))]",
+      "properties": {
+        "config": {
+            "bindings": [
+                {
+                  "authLevel": "function",
+                  "type": "httpTrigger",
+                  "direction": "in",
+                  "name": "req",
+                  "methods": [
+                    "get",
+                    "post"
+                  ]
+                },
+                {
+                  "type": "http",
+                  "direction": "out",
+                  "name": "res"
+                }
+              ]
+        },
+        "files": {
+          "index.js": "[concat('module.exports = async function (context, req) {\n    context.log(\"JavaScript HTTP trigger function processed a request.\");\n\n    const name = (req.query.name || (req.body && req.body.name));\n    const responseMessage = name\n        ? \"Hello, \" + name + \". This HTTP triggered function executed successfully.\"\n        : \"This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response. ', parameters('testParam') ,' is testParam\";\n\n    context.res = {\n        // status: 200, /* Defaults to 200 */\n        body: responseMessage\n    };\n}')]"
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
+      ]
+    }
+  ],
+  "outputs": {
+    "functionAppName": {
+        "type": "string",
+        "value": "[variables('functionAppName')]"
+    }
+}
+}

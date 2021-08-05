@@ -1,0 +1,208 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "dlsName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the data lake storage account."
+      }
+    },
+    "storageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the storage account"
+      }
+    },
+    "purviewAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the purview account"
+      }
+    },
+    "keyVaultName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the key vault account"
+      }
+    },
+    "aadAppClientId": {
+      "type": "string",
+      "metadata": {
+        "description": "The client Id of azure active directory app/service principal"
+      }
+    },
+    "aadAppClientSecret": {
+      "type": "securestring",
+      "metadata": {
+        "description": "The client secret of azure active directory app/service principal"
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location where the services/resources will be deployed"
+      }
+    }
+  },
+  "variables": {
+    "_artifactsLocation": "[deployment().properties.templatelink.uri]",
+    "storageAccountName": "[toLower(concat(parameters('storageAccountName'),uniquestring(resourceGroup().id)))]",
+    "dlsName": "[toLower(concat(parameters('dlsName'),uniquestring(resourceGroup().id)))]",
+    "purviewAccountName": "[toLower(concat(parameters('purviewAccountName'),uniquestring(resourceGroup().id)))]",
+    "keyVaultName": "[toLower(concat(parameters('keyVaultName'),uniquestring(resourceGroup().id)))]"
+  },
+  "resources": [
+    {
+      "name": "keyVaultDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templatelink": {
+          "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/keyvault.json'))]"
+        },
+        "parameters": {
+            "location": {
+                "value": "[parameters('location')]"
+            },
+            "keyVaultName": {
+                "value": "[variables('keyVaultName')]"
+            },
+            "aadAppClientSecret": {
+                "value": "[parameters('aadAppClientSecret')]"
+            }
+        }
+      }
+    },
+    {
+      "name": "storageAccountDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templatelink": {
+          "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/storageaccount.json'))]"
+        },
+        "parameters": {
+            "location": {
+                "value": "[parameters('location')]"
+            },
+            "storageAccountName": {
+                "value": "[variables('storageAccountName')]"
+            }
+        }
+      }
+    },
+    {
+      "name": "datalakeAccountDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templatelink": {
+          "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/dlsaccount.json'))]"
+        },
+        "parameters": {
+            "location": {
+                "value": "[parameters('location')]"
+            },
+            "dlsName": {
+                "value": "[variables('dlsName')]"
+            }
+        }
+      }
+    },
+    {
+        "name": "keyVaultPermissionsUpdate",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2018-05-01",
+        "dependsOn": [
+            "[resourceId('Microsoft.Resources/deployments','functionAppDeployment')]",
+            "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]"
+        ],
+        "properties": {
+          "mode": "Incremental",
+          "templatelink": {
+            "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/keyvaultpermissionsupdate.json'))]"
+          },
+          "parameters": {
+              "location": {
+                  "value": "[parameters('location')]"
+              },
+              "keyVaultName": {
+                  "value": "[variables('keyVaultName')]"
+              },
+              "functionAppName": {
+                  "value": "[reference('functionAppDeployment').outputs.functionAppName.value]"
+              }
+          }
+        }
+    },
+    {
+      "name": "purviewDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templatelink": {
+          "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/purviewaccount.json'))]"
+        },
+        "parameters": {
+            "location": {
+                "value": "[parameters('location')]"
+            },
+            "keyVaultName": {
+                "value": "[variables('purviewAccountName')]"
+            }
+        }
+      }
+    },
+    {
+      "name": "functionAppDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templatelink": {
+          "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/functionapp.json'))]"
+        },
+        "parameters": {
+            "location": {
+                "value": "[parameters('location')]"
+            }
+        }
+      }
+    },
+    {
+      "name": "functionAppUpdateDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments','purviewAccountDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','keyVaultPermissionsUpdate')]",
+        "[resourceId('Microsoft.Resources/deployments','functionAppDeployment')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templatelink": {
+          "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/functionappupdate.json'))]"
+        },
+        "parameters": {
+            "aadAppClientId": {
+                "value": "[parameters('aadAppClientSecret')]"
+          }
+        }
+      }
+    }
+  ]
+}

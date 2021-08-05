@@ -1,0 +1,80 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "aadAppClientId": {
+        "type": "string",
+        "metadata": {
+          "description": "The client Id of azure active directory app/service principal"
+        }
+      }
+    },
+      "variables": {
+        "functionAppName": "[concat('funcapp', uniqueString(resourceGroup().id))]",
+        "functionName1": "configurePurview",
+        "functionName2": "deletePurview",
+        "tenantId": "[subscription().tenantId]"
+      },
+  "resources": [ 
+    {
+      "type": "Microsoft.Web/sites/functions",
+      "apiVersion": "2020-06-01",
+      "name": "[format('{0}/{1}', variables('functionAppName'), variables('functionName1'))]",
+      "properties": {
+        "config": {
+            "bindings": [
+                {
+                  "authLevel": "function",
+                  "type": "httpTrigger",
+                  "direction": "in",
+                  "name": "req",
+                  "methods": [
+                    "get",
+                    "post"
+                  ]
+                },
+                {
+                  "type": "http",
+                  "direction": "out",
+                  "name": "res"
+                }
+              ]
+        },
+        "files": {
+          "index.js": "configure"
+        }
+      },
+      "dependsOn": []
+    },
+    {
+        "type": "Microsoft.Web/sites/functions",
+        "apiVersion": "2020-06-01",
+        "name": "[format('{0}/{1}', variables('functionAppName'), variables('functionName2'))]",
+        "properties": {
+          "config": {
+              "bindings": [
+                  {
+                    "authLevel": "function",
+                    "type": "httpTrigger",
+                    "direction": "in",
+                    "name": "req",
+                    "methods": [
+                      "get",
+                      "post"
+                    ]
+                  },
+                  {
+                    "type": "http",
+                    "direction": "out",
+                    "name": "res"
+                  }
+                ]
+          },
+          "files": {
+            "index.js": "delete"
+          }
+        },
+        "dependsOn": []
+      }
+  ]
+}
