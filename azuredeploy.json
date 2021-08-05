@@ -62,7 +62,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/keyvault.json'))]"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/keyvault.json"
         },
         "parameters": {
             "location": {
@@ -85,7 +85,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/storageaccount.json'))]"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/storageaccount.json"
         },
         "parameters": {
             "location": {
@@ -105,7 +105,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/dlsaccount.json'))]"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/dlsaccount.json"
         },
         "parameters": {
             "location": {
@@ -128,7 +128,7 @@
         "properties": {
           "mode": "Incremental",
           "templatelink": {
-            "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/keyvaultpermissionsupdate.json'))]"
+            "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/keyvaultpermissionsupdate.json"
           },
           "parameters": {
               "location": {
@@ -151,7 +151,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/purviewaccount.json'))]"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/purviewaccount.json"
         },
         "parameters": {
             "location": {
@@ -171,7 +171,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/functionapp.json'))]"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/functionapp.json"
         },
         "parameters": {
             "location": {
@@ -195,7 +195,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/functionappupdate.json'))]"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/functionappupdate.json"
         },
         "parameters": {
             "aadAppClientId": {
