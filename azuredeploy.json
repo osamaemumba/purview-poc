@@ -198,8 +198,8 @@
           "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/functionappupdate.json"
         },
         "parameters": {
-            "aadAppClientId": {
-                "value": "[parameters('aadAppClientSecret')]"
+          "aadAppClientId": {
+                "value": "[parameters('aadAppClientId')]"
           },
           "storageAccountName": {
               "value": "[variables('storageAccountName')]"
