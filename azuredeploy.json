@@ -199,7 +199,7 @@
         },
         "parameters": {
           "aadAppClientId": {
-                "value": "[parameters('aadAppClientId')]"
+              "value": "[parameters('aadAppClientId')]"
           },
           "storageAccountName": {
               "value": "[variables('storageAccountName')]"
