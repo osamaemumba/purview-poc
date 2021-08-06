@@ -49,7 +49,7 @@
   "variables": {
     "_artifactsLocation": "[deployment().properties.templatelink.uri]",
     "storageAccountName": "[toLower(concat(parameters('storageAccountName'),uniquestring(resourceGroup().id)))]",
-    "dlsName": "[toLower(concat(parameters('dlsName'), 'dls',uniquestring(resourceGroup().id)))]",
+    "dlsName": "[toLower(concat(parameters('dlsName'), uniquestring(resourceGroup().id)))]",
     "purviewAccountName": "[toLower(concat(parameters('purviewAccountName'),uniquestring(resourceGroup().id)))]",
     "keyVaultName": "[toLower(concat(parameters('keyVaultName'),uniquestring(resourceGroup().id)))]"
   },
