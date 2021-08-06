@@ -1,6 +1,8 @@
 # purview-poc
 
-<div style="text-align:center"><img src="./images/Purview_QuickStart_Flow_Diagram.jpeg" width="365" height="450"></div>
+<p align="center">
+  <img src="./images/Purview_QuickStart_Flow_Diagram.jpeg" width="446" height="550">
+</p>
 
 Azure Purview accounts are managed and configured using Azure ARM templates and Azure Functions, using Azure Purview REST APIs.
 
