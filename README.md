@@ -8,11 +8,11 @@ Azure Purview accounts are managed and configured using Azure ARM templates and 
 
 ## Requirements
 
-The following steps are required for a successful implementation of the flows:
+The following steps are required for a successful deployment of the QuickStart:
 
 * Create an Applicatin Registration in Azure Active Directory. Which helps in establishing a trust relationship between application and the Microsoft identity platform. Application (client) ID from the app registration is required afterwards.
-* In Azure Purview account, click on `Access Control (IAM)`, add role `Purview Data Source Administrator` and `Purview Data Curator` to the Service Principal App registration creater earlier.
-* Client secret can be created from `Certificates & Secrets` option under `Manage` in application registration. Click on `New client secret` button in the Client Secrets section and copy the secret under `value` column. Store this in Azure Key Vault.
+* Navigate to the Azure Purview account, click on `Access Control (IAM)`, add role `Contributor`, `Purview Data Source Administrator` and `Purview Data Curator` to the Service Principal App registration creater earlier.
+* Client secret can be created from `Certificates & Secrets` option under `Manage` in application registration. Click on `New client secret` button in the Client Secrets section and copy the secret under `value` column. 
 * To give application access to the subscription, in the Azure Subscription console, add a role assignment of role `Contributor` to the Service Principal App registration created earlier.
 
 ## APIs
