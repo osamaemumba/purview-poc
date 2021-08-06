@@ -203,6 +203,12 @@
           },
           "storageAccountName": {
               "value": "[variables('storageAccountName')]"
+          },
+          "purviewAccountName": {
+              "value": "[variables('purviewAccountName')]"
+          },
+          "keyVaultName": {
+              "value": "[variables('keyVaultName')]"
           }
         }
       }
