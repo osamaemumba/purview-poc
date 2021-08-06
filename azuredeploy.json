@@ -213,15 +213,5 @@
         }
       }
     }
-  ],
-  "outputs": {       
-    "configurePurviewFunctionUrl": {
-        "type": "string",
-        "value": "[reference('functionAppUpdateDeployment').outputs.configurePurviewFunctionUrl.value]"
-    },
-    "deletePurviewFunctionUrl": {
-        "type": "string",
-        "value": "[reference('functionAppUpdateDeployment').outputs.deletePurviewFunctionUrl.value]"
-    }     
-}
+  ]
 }

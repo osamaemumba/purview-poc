@@ -85,15 +85,5 @@
         },
         "dependsOn": []
       }
-  ],
-  "outputs": {       
-    "configurePurviewFunctionUrl": {
-        "type": "string",
-        "value": "[listsecrets(resourceId('Microsoft.Web/sites/functions', variables('functionAppName'), variables('functionName1')),'2015-08-01').trigger_url]"
-    },
-    "deletePurviewFunctionUrl": {
-        "type": "string",
-        "value": "[listsecrets(resourceId('Microsoft.Web/sites/functions', variables('functionAppName'), variables('functionName2')),'2015-08-01').trigger_url]"
-    }     
-}
+  ]
 }
