@@ -200,6 +200,9 @@
         "parameters": {
             "aadAppClientId": {
                 "value": "[parameters('aadAppClientSecret')]"
+          },
+          "storageAccountName": {
+              "value": "[variables('storageAccountName')]"
           }
         }
       }
