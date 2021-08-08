@@ -16,6 +16,17 @@
         "description": "Name for the storage account"
       }
     },
+    "newOrExistingPurviewAccount": {
+      "type": "string",
+      "defaultValue": "new",
+      "allowedValues": [
+        "new",
+        "existing"
+      ],
+      "metadata": {
+        "description": "Create a new purview account or use an existing one"
+      }
+    },
     "purviewAccountName": {
       "type": "string",
       "defaultValue": "purv",
@@ -150,6 +161,7 @@
         }
     },
     {
+      "condition": "[equals(parameters('newOrExisting'),'new')]",
       "name": "purviewDeployment",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
@@ -187,7 +199,8 @@
       }
     },
     {
-      "name": "functionAppUpdateDeployment",
+      "condition": "[equals(parameters('newOrExisting'),'new')]",
+      "name": "functionAppUpdateDeploymentWithNewPurviewAccount",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "dependsOn": [
@@ -212,6 +225,42 @@
           },
           "purviewAccountName": {
               "value": "[variables('purviewAccountName')]"
+          },
+          "keyVaultName": {
+              "value": "[variables('keyVaultName')]"
+          },
+          "dlsName": {
+              "value": "[variables('dlsName')]"
+          }
+        }
+      }
+    },
+    {
+      "condition": "[equals(parameters('newOrExisting'),'existing')]",
+      "name": "functionAppUpdateDeploymentWithExistingPurviewAccount",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','keyVaultPermissionsUpdate')]",
+        "[resourceId('Microsoft.Resources/deployments','functionAppDeployment')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templatelink": {
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/functionappupdate.json"
+        },
+        "parameters": {
+          "aadAppClientId": {
+              "value": "[parameters('aadAppClientId')]"
+          },
+          "storageAccountName": {
+              "value": "[variables('storageAccountName')]"
+          },
+          "purviewAccountName": {
+              "value": "[parameters('purviewAccountName')]"
           },
           "keyVaultName": {
               "value": "[variables('keyVaultName')]"
