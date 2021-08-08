@@ -37,18 +37,17 @@
         "tags": {}
       },
       {
-        "scope": "[resourceGroup().id]",
         "type": "Microsoft.Authorization/roleAssignments",
-        "apiVersion": "2020-04-01-preview",
+        "apiVersion": "2018-09-01-preview",
         "name": "[guid(resourceGroup().id)]",
-        "location": "[parameters('location')]",
         "dependsOn": [
           "[parameters('purviewAccountName')]"
         ],
         "properties": {
           "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')]",
           "principalId": "[reference(resourceId('Microsoft.Purview/accounts', parameters('purviewAccountName')), '2020-12-01-preview', 'Full').identity.principalId]",
-          "principalType": "ServicePrincipal"
+          "principalType": "ServicePrincipal",
+          "scope": "[resourceGroup().id]"
         }
       }
     ],
