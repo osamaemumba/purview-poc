@@ -4,36 +4,42 @@
   "parameters": {
     "dlsName": {
       "type": "string",
+      "defaultValue": "dls",
       "metadata": {
         "description": "Name for the data lake storage account."
       }
     },
     "storageAccountName": {
       "type": "string",
+      "defaultValue": "sa",
       "metadata": {
         "description": "Name for the storage account"
       }
     },
     "purviewAccountName": {
       "type": "string",
+      "defaultValue": "purv",
       "metadata": {
         "description": "Name for the purview account"
       }
     },
     "keyVaultName": {
       "type": "string",
+      "defaultValue": "kv",
       "metadata": {
         "description": "Name for the key vault account"
       }
     },
     "aadAppClientId": {
       "type": "string",
+      "defaultValue": "48130c9e-fedc-459e-9524-68ada0e12829",
       "metadata": {
         "description": "The client Id of azure active directory app/service principal"
       }
     },
     "aadAppClientSecret": {
       "type": "securestring",
+      "defaultValue": "khUke-~e.2R~K.LipRWXCR9Ex507EGM_4c",
       "metadata": {
         "description": "The client secret of azure active directory app/service principal"
       }
