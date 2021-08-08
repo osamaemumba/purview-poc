@@ -199,7 +199,7 @@
       }
     },
     {
-      "condition": "[equals(parameters('newOrExisting'),'new')]",
+      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'new')]",
       "name": "functionAppUpdateDeploymentWithNewPurviewAccount",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
@@ -236,7 +236,7 @@
       }
     },
     {
-      "condition": "[equals(parameters('newOrExisting'),'existing')]",
+      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'existing')]",
       "name": "functionAppUpdateDeploymentWithExistingPurviewAccount",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
