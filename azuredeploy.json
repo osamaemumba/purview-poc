@@ -161,7 +161,7 @@
         }
     },
     {
-      "condition": "[equals(parameters('newOrExisting'),'new')]",
+      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'new')]",
       "name": "purviewDeployment",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
