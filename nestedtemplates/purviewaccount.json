@@ -9,10 +9,7 @@
          }
        },
        "location": {
-         "type": "string",
-         "metadata": {
-           "description": "Deployment region"
-         }
+         "type": "string"
        }
     },
     "resources": [

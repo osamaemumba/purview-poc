@@ -3,10 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "location": {
-        "type": "string",
-        "metadata": {
-          "description": "Specifies the Azure location where the key vault should be created."
-        }
+        "type": "string"
       }
     },
       "variables": {

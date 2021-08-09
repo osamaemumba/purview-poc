@@ -288,6 +288,69 @@
           }
         }
       }
+    },
+    {
+      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'new')]",
+      "name": "triggerConfigurePurviewFunctionWithNewPurviewAccount",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments','functionAppUpdateDeploymentWithNewPurviewAccount')]",
+        "[resourceId('Microsoft.Resources/deployments','purviewDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','keyVaultPermissionsUpdate')]",
+        "[resourceId('Microsoft.Resources/deployments','functionAppDeployment')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templatelink": {
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/triggerconfigurepurviewfunctionurl.json"
+        },
+        "parameters": {
+            "location": {
+                "value": "[parameters('location')]"
+            },
+            "functionAppName": {
+                "value": "[reference('functionAppDeployment').outputs.functionAppName.value]"
+            },
+            "configurePurviewFunctionName": {
+                "value": "[reference('functionAppUpdateDeploymentWithNewPurviewAccount').outputs.configurePurviewFunctionName.value]"
+            }
+        }
+      }
+    },
+    {
+      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'existing')]",
+      "name": "triggerConfigurePurviewFunctionWithExistingPurviewAccount",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments','functionAppUpdateDeploymentWithExistingPurviewAccount')]",
+        "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','keyVaultPermissionsUpdate')]",
+        "[resourceId('Microsoft.Resources/deployments','functionAppDeployment')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templatelink": {
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/triggerconfigurepurviewfunctionurl.json"
+        },
+        "parameters": {
+            "location": {
+                "value": "[parameters('location')]"
+            },
+            "functionAppName": {
+                "value": "[reference('functionAppDeployment').outputs.functionAppName.value]"
+            },
+            "configurePurviewFunctionName": {
+                "value": "[reference('functionAppUpdateDeploymentWithExistingPurviewAccount').outputs.configurePurviewFunctionName.value]"
+            }
+        }
+      }
     }
   ]
 }
