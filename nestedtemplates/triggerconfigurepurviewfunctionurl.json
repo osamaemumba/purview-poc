@@ -31,7 +31,7 @@
               "forceUpdateTag": "[parameters('utcValue')]",
               "azPowerShellVersion": "5.0",
               "arguments": "[concat('-configurePurviewFunctionTriggerUrl', ' ', concat('\\\"', variables('configurePurviewFunctionTriggerUrl'), '\\\"'))]",
-              "scriptContent": "Invoke-WebRequest -Uri $configurePurviewFunctionTriggerUrl -UseBasicParsing",
+              "scriptContent": "param([string] $configurePurviewFunctionTriggerUrl)\nInvoke-WebRequest -Uri $configurePurviewFunctionTriggerUrl -UseBasicParsing",
               "timeout": "PT1H",
               "cleanupPreference": "OnSuccess",
               "retentionInterval": "P1D"
