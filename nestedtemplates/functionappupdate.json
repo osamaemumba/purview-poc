@@ -19,6 +19,16 @@
       },
       "purviewAccountName": {
         "type": "string"
+      },
+      "newOrExistingPurviewAccount": {
+        "type": "string",
+        "allowedValues": [
+          "new",
+          "existing"
+        ],
+        "metadata": {
+          "description": "Create a new purview account or use an existing one"
+        }
       }
     },
       "variables": {
@@ -29,6 +39,7 @@
       },
   "resources": [
     {
+      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'new')]",
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2018-09-01-preview",
       "name": "[guid(resourceGroup().id)]",
@@ -78,7 +89,7 @@
           "config": {
               "bindings": [
                   {
-                    "authLevel": "function",
+                    "authLevel": "anonymous",
                     "type": "httpTrigger",
                     "direction": "in",
                     "name": "req",

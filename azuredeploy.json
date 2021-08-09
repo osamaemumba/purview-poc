@@ -231,6 +231,9 @@
           },
           "dlsName": {
               "value": "[variables('dlsName')]"
+          },
+          "newOrExistingPurviewAccount": {
+              "value": "[variables('newOrExistingPurviewAccount')]"
           }
         }
       }
@@ -267,6 +270,9 @@
           },
           "dlsName": {
               "value": "[variables('dlsName')]"
+          },
+          "newOrExistingPurviewAccount": {
+              "value": "[variables('newOrExistingPurviewAccount')]"
           }
         }
       }
