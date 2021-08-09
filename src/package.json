@@ -9,6 +9,7 @@
   "dependencies": {
     "axios": "",
     "qs": "",
+    "uuid": "",
     "@azure/identity": "^1.0.3",
     "@azure/keyvault-secrets": "^4.0.4"
   },
