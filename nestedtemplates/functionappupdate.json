@@ -114,15 +114,5 @@
         },
         "dependsOn": []
       }
-  ],
-  "outputs": {
-    "configurePurviewFunctionName": {
-        "type": "string",
-        "value": "[variables('configurePurviewFunctionName')]"
-    },
-    "deletePurviewFunctionName": {
-        "type": "string",
-        "value": "[variables('deletePurviewFunctionName')]"
-  }
-}
+  ]
 }
