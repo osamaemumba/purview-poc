@@ -128,8 +128,8 @@
             "parameters":  {}
         },
         "dependsOn": [
-          "[resourceId('Microsoft.Web/sites/functions', format('{0}/{1}', variables('functionAppName'), variables('functionName1')))]",
-          "[resourceId('Microsoft.Web/sites/functions', format('{0}/{1}', variables('functionAppName'), variables('functionName2')))]",
+          "[format('{0}/{1}', variables('functionAppName'), variables('functionName1'))]",
+          "[format('{0}/{1}', variables('functionAppName'), variables('functionName2'))]",
           "[variables('roleAssignmentName')]"
         ]
     }
