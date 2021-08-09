@@ -239,10 +239,10 @@
               "value": "[variables('dlsName')]"
           },
           "newOrExistingPurviewAccount": {
-              "value": "[variables('newOrExistingPurviewAccount')]"
+              "value": "[parameters('newOrExistingPurviewAccount')]"
           },
           "purviewResourceGroup": {
-              "value": "[variables('purviewResourceGroup')]"
+              "value": "[parameters('purviewResourceGroup')]"
           }
         }
       }
@@ -281,10 +281,10 @@
               "value": "[variables('dlsName')]"
           },
           "newOrExistingPurviewAccount": {
-              "value": "[variables('newOrExistingPurviewAccount')]"
+              "value": "[parameters('newOrExistingPurviewAccount')]"
           },
           "purviewResourceGroup": {
-              "value": "[variables('purviewResourceGroup')]"
+              "value": "[parameters('purviewResourceGroup')]"
           }
         }
       }
