@@ -34,6 +34,13 @@
         "description": "Name for the purview account"
       }
     },
+    "purviewResourceGroup": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().name]",
+      "metadata": {
+        "description": "Kindly provide the name of the resource group for the existing purview account"
+      }
+    },
     "keyVaultName": {
       "type": "string",
       "defaultValue": "kv",
@@ -64,7 +71,6 @@
     }
   },
   "variables": {
-    "_artifactsLocation": "[deployment().properties.templatelink.uri]",
     "storageAccountName": "[toLower(concat(parameters('storageAccountName'),uniquestring(resourceGroup().id)))]",
     "dlsName": "[toLower(concat(parameters('dlsName'), uniquestring(resourceGroup().id)))]",
     "purviewAccountName": "[toLower(concat(parameters('purviewAccountName'),uniquestring(resourceGroup().id)))]",
@@ -234,6 +240,9 @@
           },
           "newOrExistingPurviewAccount": {
               "value": "[variables('newOrExistingPurviewAccount')]"
+          },
+          "purviewResourceGroup": {
+              "value": "[variables('purviewResourceGroup')]"
           }
         }
       }
@@ -273,6 +282,9 @@
           },
           "newOrExistingPurviewAccount": {
               "value": "[variables('newOrExistingPurviewAccount')]"
+          },
+          "purviewResourceGroup": {
+              "value": "[variables('purviewResourceGroup')]"
           }
         }
       }
