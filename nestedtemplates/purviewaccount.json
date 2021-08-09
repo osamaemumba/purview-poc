@@ -35,20 +35,6 @@
           "capacity": "4"
         },
         "tags": {}
-      },
-      {
-        "type": "Microsoft.Authorization/roleAssignments",
-        "apiVersion": "2018-09-01-preview",
-        "name": "[guid(resourceGroup().id)]",
-        "dependsOn": [
-          "[parameters('purviewAccountName')]"
-        ],
-        "properties": {
-          "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')]",
-          "principalId": "[reference(resourceId('Microsoft.Purview/accounts', parameters('purviewAccountName')), '2020-12-01-preview', 'Full').identity.principalId]",
-          "principalType": "ServicePrincipal",
-          "scope": "[resourceGroup().id]"
-        }
       }
     ],
     "outputs": {}
