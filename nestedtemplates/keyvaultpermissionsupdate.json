@@ -36,7 +36,9 @@
                     "keys": [],
                     "secrets": [
                         "Get",
-                        "Set"
+                        "Set",
+                        "Delete",
+                        "Purge"
                     ],
                     "certificates": []
                 }
