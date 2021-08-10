@@ -17,6 +17,7 @@
     },
 
     "variables": {
+        "dsIdentityName": "dsId",
         "tenantId": "[subscription().tenantId]"
     },
 
@@ -42,7 +43,18 @@
                     ],
                     "certificates": []
                 }
-            }
+            },
+            {
+              "tenantId": "[variables('tenantId')]",
+              "objectId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('dsIdentityName')), '2018-11-30').principalId]",
+              "permissions": {
+                  "keys": [],
+                  "secrets": [
+                      "Get"
+                  ],
+                  "certificates": []
+              }
+          }
         ],
           "sku": {
             "name": "Standard",

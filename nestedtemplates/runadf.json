@@ -1,0 +1,58 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "utcValue": {
+        "type": "string",
+        "defaultValue": "[utcNow()]"
+      },
+      "aadAppClientId": {
+        "type": "string",
+        "metadata": {
+          "description": "The client Id of azure active directory app/service principal"
+        }
+      },
+      "location": {
+        "type": "string",
+        "metadata": {
+          "description": "Specifies the Azure location where the identity will be created."
+        }
+      },
+      "keyVaultName": {
+        "type": "string"
+      },
+      "factoryName": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "dsIdentityName": "dsId",
+      "tenantId": "[subscription().tenantId]",
+      "adfRG": "[resourceGroup().name]"
+    },
+    "resources": [
+      {
+        "type": "Microsoft.Resources/deploymentScripts",
+        "apiVersion": "2020-10-01",
+        "name": "runAdfPipeline",
+        "location": "[parameters('location')]",
+        "kind": "AzurePowerShell",
+        "dependsOn": [],
+        "identity": {
+          "type": "UserAssigned",
+          "userAssignedIdentities": {
+            "[resourceID('Microsoft.ManagedIdentity/userAssignedIdentities', variables('dsIdentityName'))]": {}
+          }
+        },
+        "properties": {
+          "forceUpdateTag": "[parameters('utcValue')]",
+          "azPowerShellVersion": "5.0",
+          "arguments": "[concat('-aadAppClientId', ' ', concat('\\\"', parameters('aadAppClientId'), '\\\"'), ' ', '-tenantId', ' ', concat('\\\"', variables('tenantId'), '\\\"'), ' ', '-keyVaultName', ' ', concat('\\\"', parameters('keyVaultName'), '\\\"'), ' ', '-factoryName', ' ', concat('\\\"', parameters('factoryName'), '\\\"'), ' ', '-adfRG', ' ', concat('\\\"', variables('adfRG'), '\\\"'))]",
+          "scriptContent": "Install-Module -Name \"Az.Accounts\" -Force\n\r$secret = Get-AzKeyVaultSecret -VaultName $keyVaultName -Name \"aadAppClientSecret\" -AsPlainText\n\r$appId = $aadAppClientId\n\r$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $appId, $secret\n\rConnect-AzAccount -Credential $Credential-Tenant $tenantId -ServicePrincipal\n\rImport-Module Az.Resources\n\rInvoke-AzureRmDataFactoryV2Pipeline -ResourceGroupName $adfRG -DataFactoryName $factoryName -PipelineName \"NYC_Pipeline\"",
+          "timeout": "PT1H",
+          "cleanupPreference": "OnSuccess",
+          "retentionInterval": "P1D"
+        }
+      }
+    ]
+  }
