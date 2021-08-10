@@ -144,9 +144,6 @@
             },
             "dlsName": {
                 "value": "[variables('dlsName')]"
-            },
-            "storageAccountName": {
-                "value": "[variables('storageAccountName')]"
             }
         }
       }
@@ -162,7 +159,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/adf/nestedtemplates/datafactory.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/adf/nestedtemplates/dataFactory.json"
         },
         "parameters": {
             "location": {
@@ -173,6 +170,9 @@
             },
             "dlsName": {
                 "value": "[variables('dlsName')]"
+            },
+            "storageAccountName": {
+                "value": "[variables('storageAccountName')]"
             }
         }
       }

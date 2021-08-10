@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "factoryName": {
-            "type": "string",
+            "type": "string"
         },
 
         "storageAccountName": {
