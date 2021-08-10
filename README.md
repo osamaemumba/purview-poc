@@ -7,6 +7,7 @@
 Azure Purview accounts are managed and configured using Azure ARM templates and Azure Functions, using Azure Purview REST APIs.
 
 ## Table of Contents
+
 * [APIs](#apis)
 * [Prerequisites](#prerequisites)
 * [Roles and Access Policies](#roles-and-access-policies)
@@ -48,6 +49,7 @@ The following values are needed when using the OneClick Deployment ARM template:
     * **Location:** Location where the resources will be deployed 
 
 ## Roles and Access Policies
+
 The following table illustrates the required roles and permissions needed:-
 
 <table>
@@ -60,7 +62,7 @@ The following table illustrates the required roles and permissions needed:-
     <tbody>
         <tr>
             <td rowspan=2>Application Registration</td>
-            <td>Purviw Data Curator</td>
+            <td>Purview Data Curator</td>
         </tr>
         <tr>
             <td>Purview Data Source Administrator</td>
@@ -72,13 +74,13 @@ The following table illustrates the required roles and permissions needed:-
 
 The following steps are required for a successful deployment of the QuickStart.
 
-* Create an Applicatin Registration in Azure Active Directory. Which helps in establishing a trust relationship between application and the Microsoft identity platform. Copy the client id and client secret from App registration as shown below:-
+* Create an Application Registration in Azure Active Directory. Which helps in establishing a trust relationship between application and the Microsoft identity platform. Copy the client id and client secret from App registration as shown below:-
 
 <p align="center">
   <img src="./images/purview-01.gif">
 </p>
 
-* To give application access to the subscription, in Azure Subscription console, add a role assignment of role `Purview Data Curator` and `Purview Data Source Administrator` to the Service Principal App registration creater earlier as shown below:-
+* To give application access to the subscription, in Azure Subscription console, add a role assignment of role `Purview Data Curator` and `Purview Data Source Administrator` to the Service Principal App registration created earlier as shown below:-
 
 <p align="center">
   <img src="./images/purview-02.gif">
