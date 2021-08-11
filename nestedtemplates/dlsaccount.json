@@ -5,7 +5,7 @@
     "location": {
       "type": "string"
     },
-    "dlsName": {
+    "dataLakeAccountName": {
       "type": "string"
     }
   },
@@ -14,7 +14,7 @@
      {
       "type": "Microsoft.Storage/storageAccounts",
       "apiVersion": "2019-06-01",
-      "name": "[parameters('dlsName')]",
+      "name": "[parameters('dataLakeAccountName')]",
       "location": "[parameters('location')]",
       "sku": {
         "name": "Standard_LRS"

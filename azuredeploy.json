@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "dlsName": {
+    "dataLakeAccountName": {
       "type": "string",
       "defaultValue": "dls",
       "metadata": {
@@ -77,7 +77,7 @@
   },
   "variables": {
     "storageAccountName": "[toLower(concat(parameters('storageAccountName'),uniquestring(resourceGroup().id)))]",
-    "dlsName": "[toLower(concat(parameters('dlsName'), uniquestring(resourceGroup().id)))]",
+    "dataLakeAccountName": "[toLower(concat(parameters('dataLakeAccountName'), uniquestring(resourceGroup().id)))]",
     "purviewAccountName": "[toLower(concat(parameters('purviewAccountName'),uniquestring(resourceGroup().id)))]",
     "keyVaultName": "[toLower(concat(parameters('keyVaultName'),uniquestring(resourceGroup().id)))]",
     "factoryName": "[toLower(concat(parameters('factoryName'),uniquestring(resourceGroup().id)))]"
@@ -140,8 +140,8 @@
             "location": {
                 "value": "[parameters('location')]"
             },
-            "dlsName": {
-                "value": "[variables('dlsName')]"
+            "dataLakeAccountName": {
+                "value": "[variables('dataLakeAccountName')]"
             }
         }
       }
@@ -166,8 +166,8 @@
             "factoryName": {
                 "value": "[variables('factoryName')]"
             },
-            "dlsName": {
-                "value": "[variables('dlsName')]"
+            "dataLakeAccountName": {
+                "value": "[variables('dataLakeAccountName')]"
             },
             "storageAccountName": {
                 "value": "[variables('storageAccountName')]"
@@ -315,8 +315,8 @@
           "keyVaultName": {
               "value": "[variables('keyVaultName')]"
           },
-          "dlsName": {
-              "value": "[variables('dlsName')]"
+          "dataLakeAccountName": {
+              "value": "[variables('dataLakeAccountName')]"
           },
           "newOrExistingPurviewAccount": {
               "value": "[parameters('newOrExistingPurviewAccount')]"
@@ -358,8 +358,8 @@
           "keyVaultName": {
               "value": "[variables('keyVaultName')]"
           },
-          "dlsName": {
-              "value": "[variables('dlsName')]"
+          "dataLakeAccountName": {
+              "value": "[variables('dataLakeAccountName')]"
           },
           "newOrExistingPurviewAccount": {
               "value": "[parameters('newOrExistingPurviewAccount')]"

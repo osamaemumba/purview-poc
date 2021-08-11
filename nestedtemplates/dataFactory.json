@@ -10,7 +10,7 @@
             "type": "string"
         },
 
-        "dlsName": {
+        "dataLakeAccountName": {
             "type": "string"
         },
         "location": {
@@ -21,7 +21,7 @@
     "variables": {
         "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]",
         "storageAccountId": "[concat(resourceGroup().id,'/providers/Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
-        "dataLakeAccountId": "[concat(resourceGroup().id,'/providers/Microsoft.Storage/storageAccounts/', parameters('dlsName'))]",
+        "dataLakeAccountId": "[concat(resourceGroup().id,'/providers/Microsoft.Storage/storageAccounts/', parameters('dataLakeAccountName'))]",
         "HttpServerNYCTaxi_properties_typeProperties_url": "https://nytaxiblob.blob.core.windows.net/"
     },
     "resources": [
@@ -64,12 +64,12 @@
                 "annotations": [],
                 "type": "AzureBlobFS",
                 "typeProperties": {
-                    "url": "[concat('https://',parameters('dlsName'),'.dfs.core.windows.net')]",
+                    "url": "[concat('https://',parameters('dataLakeAccountName'),'.dfs.core.windows.net')]",
                     "accountKey": {
                         "type": "SecureString",
                         "value": "[concat(listKeys(variables('dataLakeAccountId'),'2015-05-01-preview').key1)]"
                     },
-                    "connectionString": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('dlsName'),';AccountKey=',concat(listKeys(variables('dataLakeAccountId'),'2015-05-01-preview').key1),';EndpointSuffix=core.windows.net')]"
+                    "connectionString": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('dataLakeAccountName'),';AccountKey=',concat(listKeys(variables('dataLakeAccountId'),'2015-05-01-preview').key1),';EndpointSuffix=core.windows.net')]"
 
                 }
             },
