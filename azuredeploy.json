@@ -241,15 +241,9 @@
             "location": {
                 "value": "[parameters('location')]"
             },
-            "keyVaultName": {
-                "value": "[variables('keyVaultName')]"
-            },
             "factoryName": {
                 "value": "[variables('factoryName')]"
-            },
-            "aadAppClientId": {
-              "value": "[parameters('aadAppClientId')]"
-          }
+            }
         }
       }
     },

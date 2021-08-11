@@ -6,20 +6,11 @@
         "type": "string",
         "defaultValue": "[utcNow()]"
       },
-      "aadAppClientId": {
-        "type": "string",
-        "metadata": {
-          "description": "The client Id of azure active directory app/service principal"
-        }
-      },
       "location": {
         "type": "string",
         "metadata": {
           "description": "Specifies the Azure location where the identity will be created."
         }
-      },
-      "keyVaultName": {
-        "type": "string"
       },
       "factoryName": {
         "type": "string"
@@ -27,7 +18,6 @@
     },
     "variables": {
       "dsIdentityName": "dsId",
-      "tenantId": "[subscription().tenantId]",
       "adfRG": "[resourceGroup().name]"
     },
     "resources": [
