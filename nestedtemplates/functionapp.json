@@ -90,7 +90,7 @@
                 ],
                 "properties": {
                   "RepoUrl": "https://github.com/osamaemumba/purview-poc",
-                  "branch": "adf",
+                  "branch": "main",
                   "IsManualIntegration": true
                 }
            }
