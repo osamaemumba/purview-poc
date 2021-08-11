@@ -57,14 +57,12 @@
     },
     "aadAppClientId": {
       "type": "string",
-      "defaultValue": "48130c9e-fedc-459e-9524-68ada0e12829",
       "metadata": {
         "description": "The client Id of azure active directory app/service principal"
       }
     },
     "aadAppClientSecret": {
       "type": "securestring",
-      "defaultValue": "khUke-~e.2R~K.LipRWXCR9Ex507EGM_4c",
       "metadata": {
         "description": "The client secret of azure active directory app/service principal"
       }
