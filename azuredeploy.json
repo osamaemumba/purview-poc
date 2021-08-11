@@ -228,7 +228,6 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "dependsOn": [
-          "[resourceId('Microsoft.Resources/deployments','functionAppDeployment')]",
           "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
           "[resourceId('Microsoft.Resources/deployments','datafactoryDeploymentScriptIdentityAndRole')]",
           "[resourceId('Microsoft.Resources/deployments','keyVaultPermissionsUpdate')]"
