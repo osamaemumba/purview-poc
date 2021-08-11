@@ -98,5 +98,11 @@
            }
         ]
     }
-  ]
+  ],
+  "outputs": {
+    "functionAppName": {
+        "type": "string",
+        "value": "[variables('functionAppName')]"
+    }
+}
 }
