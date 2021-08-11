@@ -47,7 +47,7 @@
         "properties": {
           "forceUpdateTag": "[parameters('utcValue')]",
           "azPowerShellVersion": "6.0",
-          "arguments": "[concat('-aadAppClientId', ' ', concat('\\\"', parameters('aadAppClientId'), '\\\"'), ' ', '-tenantId', ' ', concat('\\\"', variables('tenantId'), '\\\"'), ' ', '-keyVaultName', ' ', concat('\\\"', parameters('keyVaultName'), '\\\"'), ' ', '-factoryName', ' ', concat('\\\"', parameters('factoryName'), '\\\"'), ' ', '-adfRG', ' ', concat('\\\"', variables('adfRG'), '\\\"'))]",
+          "arguments": "[concat('-factoryName', ' ', concat('\\\"', parameters('factoryName'), '\\\"'), ' ', '-adfRG', ' ', concat('\\\"', variables('adfRG'), '\\\"'))]",
           "scriptContent": "param([string] $aadAppClientId, [string] $tenantId, [string] $keyVaultName, [string] $factoryName, [string] $adfRG)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.DataFactory\" -Force\n\rConnect-AzAccount -Identity\n\rInvoke-AzDataFactoryV2Pipeline -ResourceGroupName $adfRG -DataFactoryName $factoryName -PipelineName \"NYC_Pipeline\"",
           "timeout": "PT1H",
           "cleanupPreference": "OnSuccess",
