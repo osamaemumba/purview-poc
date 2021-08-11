@@ -48,6 +48,13 @@
         "description": "Name for the key vault account"
       }
     },
+    "factoryName": {
+      "type": "string",
+      "defaultValue": "adf",
+      "metadata": {
+        "description": "Name for the azure Data Factory"
+      }
+    },
     "aadAppClientId": {
       "type": "string",
       "defaultValue": "48130c9e-fedc-459e-9524-68ada0e12829",
@@ -74,7 +81,8 @@
     "storageAccountName": "[toLower(concat(parameters('storageAccountName'),uniquestring(resourceGroup().id)))]",
     "dlsName": "[toLower(concat(parameters('dlsName'), uniquestring(resourceGroup().id)))]",
     "purviewAccountName": "[toLower(concat(parameters('purviewAccountName'),uniquestring(resourceGroup().id)))]",
-    "keyVaultName": "[toLower(concat(parameters('keyVaultName'),uniquestring(resourceGroup().id)))]"
+    "keyVaultName": "[toLower(concat(parameters('keyVaultName'),uniquestring(resourceGroup().id)))]",
+    "factoryName": "[toLower(concat(parameters('factoryName'),uniquestring(resourceGroup().id)))]"
   },
   "resources": [
     {
@@ -141,12 +149,61 @@
       }
     },
     {
+      "name": "datafactoryDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]"
+    ],
+      "properties": {
+        "mode": "Incremental",
+        "templatelink": {
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/dataFactory.json"
+        },
+        "parameters": {
+            "location": {
+                "value": "[parameters('location')]"
+            },
+            "factoryName": {
+                "value": "[variables('factoryName')]"
+            },
+            "dlsName": {
+                "value": "[variables('dlsName')]"
+            },
+            "storageAccountName": {
+                "value": "[variables('storageAccountName')]"
+            }
+        }
+      }
+    },
+    {
+      "name": "datafactoryDeploymentScriptIdentityAndRole",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments','datafactoryDeployment')]"
+    ],
+      "properties": {
+        "mode": "Incremental",
+        "templatelink": {
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/adfdeploymentscriptidentityandrole.json"
+        },
+        "parameters": {
+            "location": {
+                "value": "[parameters('location')]"
+            }
+        }
+      }
+    },
+    {
         "name": "keyVaultPermissionsUpdate",
         "type": "Microsoft.Resources/deployments",
         "apiVersion": "2018-05-01",
         "dependsOn": [
             "[resourceId('Microsoft.Resources/deployments','functionAppDeployment')]",
-            "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]"
+            "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
+            "[resourceId('Microsoft.Resources/deployments','datafactoryDeploymentScriptIdentityAndRole')]"
         ],
         "properties": {
           "mode": "Incremental",
@@ -165,6 +222,30 @@
               }
           }
         }
+    },
+    {
+      "name": "runDataFactory",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [
+          "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
+          "[resourceId('Microsoft.Resources/deployments','datafactoryDeploymentScriptIdentityAndRole')]",
+          "[resourceId('Microsoft.Resources/deployments','keyVaultPermissionsUpdate')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templatelink": {
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/runadf.json"
+        },
+        "parameters": {
+            "location": {
+                "value": "[parameters('location')]"
+            },
+            "factoryName": {
+                "value": "[variables('factoryName')]"
+            }
+        }
+      }
     },
     {
       "condition": "[equals(parameters('newOrExistingPurviewAccount'),'new')]",
@@ -215,7 +296,8 @@
         "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','keyVaultPermissionsUpdate')]",
-        "[resourceId('Microsoft.Resources/deployments','functionAppDeployment')]"
+        "[resourceId('Microsoft.Resources/deployments','functionAppDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','runDataFactory')]"
       ],
       "properties": {
         "mode": "Incremental",
@@ -257,7 +339,8 @@
         "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','keyVaultPermissionsUpdate')]",
-        "[resourceId('Microsoft.Resources/deployments','functionAppDeployment')]"
+        "[resourceId('Microsoft.Resources/deployments','functionAppDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','runDataFactory')]"
       ],
       "properties": {
         "mode": "Incremental",
