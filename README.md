@@ -12,7 +12,6 @@ Azure Purview accounts are managed and configured using Azure ARM templates and 
 * [Prerequisites](#prerequisites)
 * [Roles and Access Policies](#roles-and-access-policies)
 * [Setup and Configure Purview](#setup-and-configure-purview)
-* [OneClick Deployment](#oneclick-deployment)
 
 ## APIs
 
@@ -34,19 +33,26 @@ The following APIs are called in the deletion function:
 
 * Application registration needs to be created to enable authentication against your Azure Active Directory  
 
-  <font size="3"> To be provided</font>  
-The following values are needed when using the OneClick Deployment ARM template:-
+**To be provided:**
+
+* The following values are needed when using the OneClick Deployment ARM template:-
     * **Resource Group:** Name of the resource group
     * **Region:** Azure region in which to deploy resources
-    * **Dls Name:** Name of the ADSL2 storage account
+    * **Data Lake Account Name:** Name of the ADSL2 storage account
     * **Storage Account Name:** Name of the Blob storage account
     * **New or existing Purview Account:** Whether to create a new account or use an existing one
     * **Purview Account Name:** Name of the Azure Purview Account
     * **Purview Resource Group:** Name of the resource group for purview account (change only in case when using an existing Purview account)
     * **Key Vault Name:** Name of the Azure Key vault
+    * **Factory Name:** Name for the Azure Data Factory
     * **Aad App Client Id:** Client ID of the Application Registration created in prerequisite
     * **Aad App Client Secret:** Client Secret of the Application Registration created in prerequisite
     * **Location:** Location where the resources will be deployed 
+
+Click the following button to deploy all the resources:-
+
+[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fosamaemumba%2Fpurview-poc%2Fmain%2Fazuredeploy.json)
+
 
 ## Roles and Access Policies
 
@@ -86,8 +92,4 @@ The following steps are required for a successful deployment of the QuickStart.
   <img src="./images/purview-02.gif">
 </p>
 
-* Use the link [below](#oneclick-deployment) to start the deployment of resources.
-
-## OneClick Deployment
-
-[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fosamaemumba%2Fpurview-poc%2Fmain%2Fazuredeploy.json)
+* Use the OneClick Deployment button above to start the deployment of resources. Currently it takes ~15 minutes for one complete deployment.
