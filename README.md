@@ -12,6 +12,7 @@ Azure Purview accounts are managed and configured using Azure ARM templates and 
 * [Prerequisites](#prerequisites)
 * [Roles and Access Policies](#roles-and-access-policies)
 * [Setup and Configure Purview](#setup-and-configure-purview)
+* [Troubleshooting](#troubleshooting)
 
 ## APIs
 
@@ -38,13 +39,13 @@ The following APIs are called in the deletion function:
 * The following values are needed when using the OneClick Deployment ARM template:-
     * **Resource Group:** Name of the resource group
     * **Region:** Azure region in which to deploy resources
-    * **Data Lake Account Name:** Name of the ADSL2 storage account
-    * **Storage Account Name:** Name of the Blob storage account
+    * **Data Lake Account Name:** Name of the ADSL2 storage account. This storage account will be created and registered as a data source with Purview account. 
+    * **Storage Account Name:** Name of the Blob storage account. This storage account will be created and registered as a data source with Purview account.
     * **New or existing Purview Account:** Whether to create a new account or use an existing one
-    * **Purview Account Name:** Name of the Azure Purview Account
-    * **Purview Resource Group:** Name of the resource group for purview account (change only in case when using an existing Purview account)
-    * **Key Vault Name:** Name of the Azure Key vault
-    * **Factory Name:** Name for the Azure Data Factory
+    * **Purview Account Name:** Name of the Azure Purview Account. In case of new Purview account, give a new name. To use an existing one, enter the name of existing purview account.
+    * **Purview Resource Group:** Name of the resource group to be used for Purview account. Leave as is, if the Purview account should be created in the same resource group. In case of a new Purview account or to use an existing Purview account in a different resource group, enter the name of that resource group.
+    * **Key Vault Name:** Name of the Azure Key vault. This is used to store Client Secret needed to perform API calls and also information on resources so they can be purged when needed.
+    * **Factory Name:** Name for the Azure Data Factory. This Data Factory will be created and load the data into the storage accounts with sample NYC Taxi data.
     * **Aad App Client Id:** Client ID of the Application Registration created in prerequisite
     * **Aad App Client Secret:** Client Secret of the Application Registration created in prerequisite
     * **Location:** Location where the resources will be deployed 
@@ -93,3 +94,23 @@ The following steps are required for a successful deployment of the QuickStart.
 </p>
 
 * Use the OneClick Deployment button above to start the deployment of resources. Currently it takes ~15 minutes for one complete deployment.
+
+## Troubleshooting
+
+This portion lists solutions to problems one might encounter with Purview OneClick Deployment.
+
+### Common Problems
+
+Here is a list of common problems one might encounter while deploying the template.
+
+* Deployment failed on runDataFactory step
+* Deployment failed on triggerConfigurePurviewFunction step
+
+### Solution
+In case the deployment failed on both above mentioned steps, this can be caused by the Powershell modules used to run the deployment script.
+Make sure that:
+
+* App Registration client ID and client secret passed were correct
+* The application service principal has access to roles `Purview Data Curator` and `Purview Data Source Administrator` at subscription level.
+
+If the above requirements are satisfied, rerunning the deployment should resolve this issue.
