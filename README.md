@@ -37,13 +37,13 @@ The following APIs are called in the deletion function:
 **To be provided:**
 
 * The following values are needed when using the OneClick Deployment ARM template:-
-    * **Resource Group:** Name of the resource group
+    * **Resource Group:** Name of the resource group. All the resources created by the template will be in this resource group.
     * **Region:** Azure region in which to deploy resources
     * **Data Lake Account Name:** Name of the ADSL2 storage account. This storage account will be created and registered as a data source with Purview account. 
     * **Storage Account Name:** Name of the Blob storage account. This storage account will be created and registered as a data source with Purview account.
     * **New or existing Purview Account:** Whether to create a new account or use an existing one
     * **Purview Account Name:** Name of the Azure Purview Account. In case of new Purview account, give a new name. To use an existing one, enter the name of existing purview account.
-    * **Purview Resource Group:** Name of the resource group to be used for Purview account. Leave as is, if the Purview account should be created in the same resource group. In case of a new Purview account or to use an existing Purview account in a different resource group, enter the name of that resource group.
+    * **Purview Resource Group:** Name of the resource group to be used for Purview account. Leave as is, as the new Purview account will be created in the new resource group. In case of an existing Purview account enter the name of its resource group.
     * **Key Vault Name:** Name of the Azure Key vault. This is used to store Client Secret needed to perform API calls and also information on resources such as data sources and glossary terms, so they can be purged afterwards when delete function is triggered.
     * **Factory Name:** Name for the Azure Data Factory. This Data Factory will be created and load the data into the storage accounts with sample NYC Taxi data.
     * **Aad App Client Id:** Client ID of the Application Registration created in prerequisite
@@ -93,7 +93,11 @@ The following steps are required for a successful deployment of the QuickStart.
   <img src="./images/purview-02.gif">
 </p>
 
-* Use the OneClick Deployment button above to start the deployment of resources. Currently it takes ~15 minutes for one complete deployment.
+* Use the OneClick Deployment button above to start the deployment of resources. Currently it takes ~15 minutes for one complete deployment. After the deployment is complete, the resources can be deleted by running the delete function url in the deployment output as shown below:-
+
+<p align="center">
+  <img src="./images/purview-03.gif">
+</p>
 
 ## Troubleshooting
 
