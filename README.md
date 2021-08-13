@@ -101,16 +101,18 @@ This portion lists solutions to problems one might encounter with Purview OneCli
 
 ### Common Problems
 
-Here is a list of common problems one might encounter while deploying the template.
+Here is a list of common problems one might encounter while deploying the template:-
 
-* Deployment failed on runDataFactory step
-* Deployment failed on triggerConfigurePurviewFunction step
+* Deployment failed on `runDataFactory` step
+* Deployment failed on `triggerConfigurePurviewFunction` step
+
+For both of the problems listed above, somply deploying the ARM template again solves the problem. 
 
 ### Solution
-In case the deployment failed on both above mentioned steps, this can be caused by the Powershell modules used to run the deployment script.
+In case the deployment failed on both above mentioned steps, this can be caused by the Powershell modules used in the deployment script.
 Make sure that:
 
-* App Registration client ID and client secret passed were correct
-* The application service principal has access to roles `Purview Data Curator` and `Purview Data Source Administrator` at subscription level.
+* The App Registration client ID and client secret are correct
+* The application service principal has access to the `Purview Data Curator` and `Purview Data Source Administrator` roles at subscription level.
 
 If the above requirements are satisfied, rerunning the deployment should resolve this issue.
