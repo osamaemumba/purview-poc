@@ -38,7 +38,7 @@
           "forceUpdateTag": "[parameters('utcValue')]",
           "azPowerShellVersion": "6.0",
           "arguments": "[concat('-factoryName', ' ', concat('\\\"', parameters('factoryName'), '\\\"'), ' ', '-adfRG', ' ', concat('\\\"', variables('adfRG'), '\\\"'))]",
-          "scriptContent": "param([string] $factoryName, [string] $adfRG)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.DataFactory\" -Force\n\rConnect-AzAccount -Identity\n\rInvoke-AzDataFactoryV2Pipeline -ResourceGroupName $adfRG -DataFactoryName $factoryName -PipelineName \"NYC_Pipeline\"",
+          "scriptContent": "param([string] $factoryName, [string] $adfRG)\n\rUpdate-Module -Name \"Az.Accounts\" -Force\n\rUpdate-Module -Name \"Az.DataFactory\" -Force\n\r$dataFactoryName=$factoryName\n\r$PipelineName=\"NYC_Pipeline\"\n\r$dataFactoryRG=$adfRG\n\rConnect-AzAccount -Identity\n\rInvoke-AzDataFactoryV2Pipeline -ResourceGroupName $dataFactoryRG -DataFactoryName $dataFactoryName -PipelineName $PipelineName",
           "timeout": "PT1H",
           "cleanupPreference": "OnSuccess",
           "retentionInterval": "P1D"
