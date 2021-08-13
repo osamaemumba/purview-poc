@@ -44,7 +44,7 @@ The following APIs are called in the deletion function:
     * **New or existing Purview Account:** Whether to create a new account or use an existing one
     * **Purview Account Name:** Name of the Azure Purview Account. In case of new Purview account, give a new name. To use an existing one, enter the name of existing purview account.
     * **Purview Resource Group:** Name of the resource group to be used for Purview account. Leave as is, if the Purview account should be created in the same resource group. In case of a new Purview account or to use an existing Purview account in a different resource group, enter the name of that resource group.
-    * **Key Vault Name:** Name of the Azure Key vault. This is used to store Client Secret needed to perform API calls and also information on resources so they can be purged when needed.
+    * **Key Vault Name:** Name of the Azure Key vault. This is used to store Client Secret needed to perform API calls and also information on resources such as data sources and glossary terms, so they can be purged afterwards when delete function is triggered.
     * **Factory Name:** Name for the Azure Data Factory. This Data Factory will be created and load the data into the storage accounts with sample NYC Taxi data.
     * **Aad App Client Id:** Client ID of the Application Registration created in prerequisite
     * **Aad App Client Secret:** Client Secret of the Application Registration created in prerequisite
