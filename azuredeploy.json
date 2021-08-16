@@ -94,7 +94,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/keyvault.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/fix/glossary-guid-error/nestedtemplates/keyvault.json"
         },
         "parameters": {
             "location": {
@@ -117,7 +117,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/storageaccount.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/fix/glossary-guid-error/nestedtemplates/storageaccount.json"
         },
         "parameters": {
             "location": {
@@ -137,7 +137,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/dlsaccount.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/fix/glossary-guid-error/nestedtemplates/dlsaccount.json"
         },
         "parameters": {
             "location": {
@@ -160,7 +160,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/dataFactory.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/fix/glossary-guid-error/nestedtemplates/dataFactory.json"
         },
         "parameters": {
             "location": {
@@ -188,7 +188,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/adfdeploymentscriptidentityandrole.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/fix/glossary-guid-error/nestedtemplates/adfdeploymentscriptidentityandrole.json"
         },
         "parameters": {
             "location": {
@@ -209,7 +209,7 @@
         "properties": {
           "mode": "Incremental",
           "templatelink": {
-            "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/keyvaultpermissionsupdate.json"
+            "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/fix/glossary-guid-error/nestedtemplates/keyvaultpermissionsupdate.json"
           },
           "parameters": {
               "location": {
@@ -236,7 +236,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/runadf.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/fix/glossary-guid-error/nestedtemplates/runadf.json"
         },
         "parameters": {
             "location": {
@@ -257,7 +257,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/purviewaccount.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/fix/glossary-guid-error/nestedtemplates/purviewaccount.json"
         },
         "parameters": {
             "location": {
@@ -277,7 +277,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/functionapp.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/fix/glossary-guid-error/nestedtemplates/functionapp.json"
         },
         "parameters": {
             "location": {
@@ -303,7 +303,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/functionappupdate.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/fix/glossary-guid-error/nestedtemplates/functionappupdate.json"
         },
         "parameters": {
           "aadAppClientId": {
@@ -346,7 +346,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/functionappupdate.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/fix/glossary-guid-error/nestedtemplates/functionappupdate.json"
         },
         "parameters": {
           "aadAppClientId": {
@@ -390,7 +390,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/triggerconfigurepurviewfunctionurl.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/fix/glossary-guid-error/nestedtemplates/triggerconfigurepurviewfunctionurl.json"
         },
         "parameters": {
             "location": {
@@ -415,7 +415,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/triggerconfigurepurviewfunctionurl.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/fix/glossary-guid-error/nestedtemplates/triggerconfigurepurviewfunctionurl.json"
         },
         "parameters": {
             "location": {
