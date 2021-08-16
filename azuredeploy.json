@@ -6,14 +6,14 @@
       "type": "string",
       "defaultValue": "dls",
       "metadata": {
-        "description": "Name for the data lake storage account."
+        "description": "The name you provide will be appended with a unique sting to make it globally available. The field can contain only lowercase letters and numbers. Name must be between 1 and 11 characters."
       }
     },
     "storageAccountName": {
       "type": "string",
       "defaultValue": "sa",
       "metadata": {
-        "description": "Name for the storage account"
+        "description": "The name you provide will be appended with a unique sting to make it globally available. The field can contain only lowercase letters and numbers. Name must be between 1 and 11 characters."
       }
     },
     "newOrExistingPurviewAccount": {
@@ -31,28 +31,28 @@
       "type": "string",
       "defaultValue": "purv",
       "metadata": {
-        "description": "Name for the purview account"
+        "description": "The name you provide will be appended with a unique sting to make it globally available. The Purview account name can contain only letters, numbers and hyphens. The first and last characters must be a letter or number. The hyphen(-) character must be immediately preceded and followed by a letter or number. Spaces are not allowed."
       }
     },
     "purviewResourceGroup": {
       "type": "string",
       "defaultValue": "[resourceGroup().name]",
       "metadata": {
-        "description": "Kindly provide the name of the resource group for the existing purview account"
+        "description": "Povide the name of the resource group for the existing Purview account. Leave as it is if you are creating a new Purview account or if the existing Purview account is present in the same resource group where all other resources are going to be deployed. This resource group is required to get the Purview account path to assign required RBAC role(s) to the new or existing Purview account."
       }
     },
     "keyVaultName": {
       "type": "string",
       "defaultValue": "kv",
       "metadata": {
-        "description": "Name for the key vault account"
+        "description": "The name you provide will be appended with a unique sting to make it globally available. A vault's name must be between 1-11 alphanumeric characters. The name must begin with a letter, end with a letter or digit, and not contain consecutive hyphens."
       }
     },
     "factoryName": {
       "type": "string",
       "defaultValue": "adf",
       "metadata": {
-        "description": "Name for the azure Data Factory"
+        "description": "The name you provide will be appended with a unique sting to make it globally available. The name can contain only letters, numbers and hyphens. The first and last characters must be a letter or number. Spaces are not allowed."
       }
     },
     "aadAppClientId": {
@@ -71,7 +71,7 @@
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
       "metadata": {
-        "description": "Location where the services/resources will be deployed"
+        "description": "Location where the resources will be deployed. It is, by default, set to the region of the resource group. You can upadate it to any other region. Note that all the resources will be deployed to the same location/region, that is why while chhosing the loaction, make sure all the resources/services are available in that location/region."
       }
     }
   },
