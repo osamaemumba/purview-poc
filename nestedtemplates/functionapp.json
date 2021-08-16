@@ -92,7 +92,7 @@
                 ],
                 "properties": {
                   "RepoUrl": "https://github.com/osamaemumba/purview-poc",
-                  "branch": "fix/glossary-guid-error",
+                  "branch": "glossaryerror",
                   "IsManualIntegration": true
                 }
            }
