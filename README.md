@@ -101,6 +101,8 @@ The following steps are required for a successful deployment of the QuickStart.
 
 * (Optional) In case the deployment is successful and there aren't any resources created. It can be verified by going to the Purview Account Portal. That is caused by the time Purview Account needs to set up properly. The resources can be provisioned using the `configurePurviewFunctionTriggerUrl` url from the deployment outputs after some time. The process for deleting the resources would be same. As explained in the following gif:-
 
+(to-do: add gif)
+
 <gif-to-be-added>
 <p align="center">
 </p>
