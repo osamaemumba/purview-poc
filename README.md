@@ -93,10 +93,16 @@ The following steps are required for a successful deployment of the QuickStart.
   <img src="./images/purview-02.gif">
 </p>
 
-* Use the OneClick Deployment button above to start the deployment of resources. Currently it takes ~15 minutes for one complete deployment. After the deployment is complete, the resources can be deleted by running the delete function url in the deployment output as shown below:-
+* Use the OneClick Deployment button above to start the deployment of resources. Currently it takes ~25-30 minutes for one complete deployment. After the deployment is complete, the resources can be deleted by running the `deletePurviewFunctionTriggerUrl` url from the deployment outputs as shown below:-
 
 <p align="center">
   <img src="./images/purview-03.gif">
+</p>
+
+* (Optional) In case the deployment is successful and there aren't any resources created. It can be verified by going to the Purview Account Portal. That is caused by the time Purview Account needs to set up properly. The resources can be provisioned using the `configurePurviewFunctionTriggerUrl` url from the deployment outputs after some time. The process for deleting the resources would be same. As explained in the following gif:-
+
+<gif-to-be-added>
+<p align="center">
 </p>
 
 ## Troubleshooting
@@ -107,16 +113,35 @@ This portion lists solutions to problems one might encounter with Purview OneCli
 
 Here is a list of common problems one might encounter while deploying the template:-
 
+#### 1. Failed Deployment
+
 * Deployment failed on `runDataFactory` step
 * Deployment failed on `triggerConfigurePurviewFunction` step
 
-For both of the problems listed above, somply deploying the ARM template again solves the problem. 
+#### 2. Successful Deployment
+
+* Deployment is successful but resources are not created
+
+For the failed deployments, simply deploying the ARM template again solves the problem.
 
 ### Solution
-In case the deployment failed on both above mentioned steps, this can be caused by the Powershell modules used in the deployment script.
-Make sure that:
+  
+#### 1. Failed Deployment
+
+In case the deployment failed, this can be caused by the Powershell modules used in the deployment script.
+Make sure that:-
 
 * The App Registration client ID and client secret are correct
 * The application service principal has access to the `Purview Data Curator` and `Purview Data Source Administrator` roles at subscription level.
 
 If the above requirements are satisfied, rerunning the deployment should resolve this issue.
+
+#### 2. Successful Deployment without resources
+In case the deployment was successful, but no resources were provisioend. This can be caused by the time Azure Purview Accounts need to set up and to have APIs respond properly.
+The following explains the working of deployment script in this case:-
+  
+  * Unresponsive APIs return a status code of 500
+  * The deployment script waits for 1 minute and retries to get a status code of 200
+  * In case of success status code return, the script creates the resources
+  * In case of status code 500 return, the script does 15 retries, with 1 minute wait each time
+  * If APIs are still unresponsive, the deployment script completes the deployment without provisioning resources
