@@ -11,7 +11,7 @@ Azure Purview accounts are managed and configured using Azure ARM templates and 
 * [APIs](#apis)
 * [Prerequisites](#prerequisites)
 * [Roles and Access Policies](#roles-and-access-policies)
-* [Setup and Configure Purview](#setup-and-configure-purview)
+* [Setup and Configure Purview QuickStart](#setup-and-configure-purview-quickstart)
 * [Troubleshooting](#troubleshooting)
 
 ## API's
@@ -146,4 +146,4 @@ The following explains the working of deployment script in this case:-
   * In case of status code 500 return, the script does 15 retries, with 1 minute wait each time.
   * If APIs are still unresponsive, the deployment script completes the deployment without provisioning resources.
 
-In this case, the optional step at the end of [Setup and Configure Purview](#setup-and-configure-purview) section can be followed to create the resources.
+In this case, the optional step at the end of [Setup and Configure Purview QuickStart](#setup-and-configure-purview-quickstart) section can be followed to create the resources.
