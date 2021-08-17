@@ -83,6 +83,7 @@
     "factoryName": "[toLower(concat(parameters('factoryName'),uniquestring(resourceGroup().id)))]",
     "functionAppName": "[concat('funcapp', uniqueString(resourceGroup().id))]",
     "deletePurviewFunctionName": "deletePurview",
+    "configurePurviewFunctionName": "configurePurview",
     "deletePurviewFunctionTriggerUrl": "[concat('http://', variables('functionAppName'), '.azurewebsites.net/api/', variables('deletePurviewFunctionName'))]",
     "configurePurviewFunctionTriggerUrl": "[concat('http://', variables('functionAppName'), '.azurewebsites.net/api/', variables('configurePurviewFunctionName'))]"
   },
