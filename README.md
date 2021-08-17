@@ -14,25 +14,25 @@ Azure Purview accounts are managed and configured using Azure ARM templates and 
 * [Setup and Configure Purview](#setup-and-configure-purview)
 * [Troubleshooting](#troubleshooting)
 
-## APIs
+## API's
 
 Azure Purview account configurations are managed using its REST APIs through the use of two Azure Functions. One is used to create/configure data resources and the other to delete the provisioned resources.
 
-The following APIs are called in the creation/configuration function:
+The following APIs are called in the creation/configuration function:-
 
 * [Create/Update Data Source](https://docs.microsoft.com/en-us/rest/api/purview/scanningdataplane/data-sources/create-or-update)
 * [Create Scan](https://docs.microsoft.com/en-us/rest/api/purview/scanningdataplane/scans/create-or-update)
 * [Run Scan](https://docs.microsoft.com/en-us/rest/api/purview/scanningdataplane/scan-result/run-scan)
 * [Create Glossary Term](https://atlas.apache.org/api/v2/resource_GlossaryREST.html#resource_GlossaryREST_createGlossaryTerm_POST)
 
-The following APIs are called in the deletion function:
+The following API's are called in the deletion function:-
 
 * [Delete Data Source](https://docs.microsoft.com/en-us/rest/api/purview/scanningdataplane/data-sources/delete)
 * [Delete Glossary Term](https://atlas.apache.org/api/v2/resource_GlossaryREST.html#resource_GlossaryREST_deleteGlossaryTerm_DELETE)
 
 ## Prerequisites
 
-* Application registration needs to be created to enable authentication against your Azure Active Directory  
+* Application registration needs to be created to enable authentication against your Azure Active Directory.
 
 **To be provided:**
 
@@ -57,7 +57,7 @@ Click the following button to deploy all the resources:-
 
 ## Roles and Access Policies
 
-The following table illustrates the required roles and permissions needed:-
+The following table illustrates the required roles and permissions:-
 
 <table>
     <thead>
@@ -77,9 +77,9 @@ The following table illustrates the required roles and permissions needed:-
     </tbody>
 </table>
 
-## Setup and Configure Purview
+## Setup and Configure Purview QuickStart
 
-The following steps are required for a successful deployment of the QuickStart.
+The following steps are required for a successful deployment of the Purview QuickStart.
 
 * Create an Application Registration in Azure Active Directory. Which helps in establishing a trust relationship between application and the Microsoft identity platform. Copy the client id and client secret from App registration as shown below:-
 
@@ -115,12 +115,12 @@ Here is a list of common problems one might encounter while deploying the templa
 
 #### 1. Failed Deployment
 
-* Deployment failed on `runDataFactory` step
-* Deployment failed on `triggerConfigurePurviewFunction` step
+* Deployment failed on `runDataFactory` step.
+* Deployment failed on `triggerConfigurePurviewFunction` step.
 
 #### 2. Successful Deployment
 
-* Deployment is successful but resources are not created
+* Deployment is successful but resources are not created.
 
 For the failed deployments, simply deploying the ARM template again solves the problem.
 
@@ -131,7 +131,7 @@ For the failed deployments, simply deploying the ARM template again solves the p
 In case the deployment failed, this can be caused by the Powershell modules used in the deployment script.
 Make sure that:-
 
-* The App Registration client ID and client secret are correct
+* The App Registration client ID and client secret are correct.
 * The application service principal has access to the `Purview Data Curator` and `Purview Data Source Administrator` roles at subscription level.
 
 If the above requirements are satisfied, rerunning the deployment should resolve this issue.
@@ -140,10 +140,10 @@ If the above requirements are satisfied, rerunning the deployment should resolve
 In case the deployment was successful, but no resources were provisioend. This can be caused by the time Azure Purview Accounts need to set up and to have APIs respond properly.
 The following explains the working of deployment script in this case:-
 
-  * Unresponsive APIs return a status code of 500
-  * The deployment script waits for 1 minute and retries to get a status code of 200
-  * In case of success status code return, the script creates the resources
-  * In case of status code 500 return, the script does 15 retries, with 1 minute wait each time
-  * If APIs are still unresponsive, the deployment script completes the deployment without provisioning resources
+  * Unresponsive APIs return a status code of 500.
+  * The deployment script waits for 1 minute and retries to get a status code of 200.
+  * In case of success status code return, the script creates the resources.
+  * In case of status code 500 return, the script does 15 retries, with 1 minute wait each time.
+  * If APIs are still unresponsive, the deployment script completes the deployment without provisioning resources.
 
 In this case, the optional step at the end of [Setup and Configure Purview](#setup-and-configure-purview) section can be followed to create the resources.
