@@ -99,7 +99,7 @@ The following steps are required for a successful deployment of the QuickStart.
   <img src="./images/purview-03-update.gif">
 </p>
 
-* (Optional) In case the deployment is successful and there aren't any resources created. It can be verified by going to the Purview Account Portal. That is caused by the time Purview Account needs to set up properly. The resources can be provisioned using the `configurePurviewFunctionTriggerUrl` url from the deployment outputs after some time. The same url needs to be used after some time in case it does not work in first attempt. It should output `AzurePurview Creation function triggered successfully`. The process for deleting the resources would be same. As explained in the following gif:-
+* (Optional) In case the deployment is successful and there aren't any resources created. It can be verified by going to the Purview Account Portal. That is caused by the time Purview Account needs to set up properly. The resources can be provisioned using the `configurePurviewFunctionTriggerUrl` url from the deployment outputs. The same url needs to be used to trigger the creation function after some time, in case it does not work in first attempt. It should output `AzurePurview Creation function triggered successfully`. The process for deleting the resources would be same as explained previously. The following gif illustrates the creation of resources:-
 
 <p align="center">
   <img src="./images/purview-04.gif">
@@ -145,3 +145,5 @@ The following explains the working of deployment script in this case:-
   * In case of success status code return, the script creates the resources
   * In case of status code 500 return, the script does 15 retries, with 1 minute wait each time
   * If APIs are still unresponsive, the deployment script completes the deployment without provisioning resources
+
+In this case, the optional step at the end of [Setup and Configure Purview](#setup-and-configure-purview) section can be followed to create the resources.
