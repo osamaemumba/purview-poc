@@ -96,15 +96,13 @@ The following steps are required for a successful deployment of the QuickStart.
 * Use the OneClick Deployment button above to start the deployment of resources. Currently it takes ~25-30 minutes for one complete deployment. After the deployment is complete, the resources can be deleted by running the `deletePurviewFunctionTriggerUrl` url from the deployment outputs as shown below:-
 
 <p align="center">
-  <img src="./images/purview-03.gif">
+  <img src="./images/purview-03-update.gif">
 </p>
 
-* (Optional) In case the deployment is successful and there aren't any resources created. It can be verified by going to the Purview Account Portal. That is caused by the time Purview Account needs to set up properly. The resources can be provisioned using the `configurePurviewFunctionTriggerUrl` url from the deployment outputs after some time. The process for deleting the resources would be same. As explained in the following gif:-
+* (Optional) In case the deployment is successful and there aren't any resources created. It can be verified by going to the Purview Account Portal. That is caused by the time Purview Account needs to set up properly. The resources can be provisioned using the `configurePurviewFunctionTriggerUrl` url from the deployment outputs after some time. The same url needs to be used after some time in case it does not work in first attempt. It should output `AzurePurview Creation function triggered successfully`. The process for deleting the resources would be same. As explained in the following gif:-
 
-(to-do: add gif)
-
-<gif-to-be-added>
 <p align="center">
+  <img src="./images/purview-04.gif">
 </p>
 
 ## Troubleshooting
@@ -127,7 +125,7 @@ Here is a list of common problems one might encounter while deploying the templa
 For the failed deployments, simply deploying the ARM template again solves the problem.
 
 ### Solution
-  
+
 #### 1. Failed Deployment
 
 In case the deployment failed, this can be caused by the Powershell modules used in the deployment script.
@@ -141,7 +139,7 @@ If the above requirements are satisfied, rerunning the deployment should resolve
 #### 2. Successful Deployment without resources
 In case the deployment was successful, but no resources were provisioend. This can be caused by the time Azure Purview Accounts need to set up and to have APIs respond properly.
 The following explains the working of deployment script in this case:-
-  
+
   * Unresponsive APIs return a status code of 500
   * The deployment script waits for 1 minute and retries to get a status code of 200
   * In case of success status code return, the script creates the resources
