@@ -1,7 +1,7 @@
 # Azure Purview QuickStart
 
 <p align="center">
-  <img src="./images/PurviewQuickStartFlowDiagram1.jpeg" width="446" height="450">
+  <img src="./images/PurviewQuickStartFlowDiagram1.jpeg" width="446" height="400">
 </p>
 
 Azure Purview accounts are created using ARM templates and are configured by using the Purview REST API's.
