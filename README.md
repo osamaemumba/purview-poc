@@ -17,7 +17,64 @@ Azure Purview accounts are created using ARM templates and are configured by usi
 
 * Application registration needs to be created to enable authentication against the Azure Active Directory.
 
-* Create an Application Registration in Azure Active Directory. Which helps in establishing a trust relationship between application and the Microsoft identity platform. Copy the client id and client secret from App registration as shown below:-
+* Create an Application Registration in Azure Active Directory, which helps in establishing a trust relationship between application and the Microsoft identity platform.
+
+* In Azure Homepage, search for `Active Directory` and select `Azure Active Directory` from the drop-down list.
+
+<p align="center">
+  <img src="./images/purview-01-01.png">
+</p>
+
+* In Azure Active Directory page, select `App registrations` from the left pane.
+
+<p align="center">
+  <img src="./images/purview-01-02.png">
+</p>
+
+* Click `New registration` to create a new Application Registration.
+
+<p align="center">
+  <img src="./images/purview-01-03.png">
+</p>
+
+* Enter the following information:-
+    * `Name`: Name for the new Application Registration.
+    * `Supported account types`: Defines who can use this application
+    * `Redirect URI`: Authentication response is sent to this URI 
+
+    **Supported account type** and **Redirect URI** can be left as default. Click on `Register` at the bottom when done.
+
+* After a new registration is created, copy the client id as shown below:-
+
+<p align="center">
+  <img src="./images/purview-01-04.png">
+</p>
+
+* Click on `Certificates & secrets` on the left pane:-
+
+<p align="center">
+  <img src="./images/purview-01-05.png">
+</p>
+
+* Click on `New client secret` to create a new secret id for application registration:-
+
+<p align="center">
+  <img src="./images/purview-01-06.png">
+</p>
+
+* Enter a description, select the expiration of secret id and click `Add` at the bottom:-
+
+<p align="center">
+  <img src="./images/purview-01-07-updated.png">
+</p>
+
+* Copy the secret id under `Value` column as shown below:-
+
+<p align="center">
+  <img src="./images/purview-01-08.png">
+</p>
+
+* The complete procedure of creating the Application Registration and copying Client id and secret is shown below:-
 
 <p align="center">
   <img src="./images/purview-01.gif">
@@ -44,6 +101,40 @@ The following table illustrates the required roles and permissions:-
         </tr>
     </tbody>
 </table>
+
+* With Application registration created, search for `Subscription` and select `Subscriptions` from the drop-down list:-
+
+<p align="center">
+  <img src="./images/purview-02-01.png">
+</p>
+
+* Select the Azure Subscription and click `Access control (IAM)`:-
+
+<p align="center">
+  <img src="./images/purview-02-02.png">
+</p>
+
+* To attach the required roles to Application registration, choose `Add` and select `Add role assignment` from the drop down list:-
+
+<p align="center">
+  <img src="./images/purview-02-03.png">
+</p>
+
+* To add role assignment, search for `Purview Data Curator` role and under `Select` search for the service principal created earlier as shown below. Click on the application registration to select it:-
+
+<p align="center">
+  <img src="./images/purview-02-04.png">
+</p>
+
+* Make sure the application registration shows under `Selected members`. Click `Save` to add role:-
+
+<p align="center">
+  <img src="./images/purview-02-05.png">
+</p>
+
+* Repeat the same procedure to add `Purview Data Source Administrator` role to the Application registration as well.
+
+* The complete procedure of adding the required roles to the Application Registration is shown below:-
 
 <p align="center">
   <img src="./images/purview-02.gif">
