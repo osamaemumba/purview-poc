@@ -80,7 +80,7 @@ Azure Purview accounts are created using ARM templates and are configured by usi
   <img src="./images/purview-01.gif">
 </p>
 
-* To give application access to the subscription, in Azure Subscription console, add a role assignment of role `Purview Data Curator` and `Purview Data Source Administrator` to the Service Principal App registration created earlier as shown below:-
+* To give application access to the subscription, in Azure Subscription console, add a role assignment of role `Purview Data Curator` and `Purview Data Source Administrator` to the Service Principal App registration created earlier.
 
 The following table illustrates the required roles and permissions:-
 
