@@ -4,14 +4,19 @@
   <img src="./images/PurviewQuickStartFlowDiagram1.jpeg" width="446" height="400">
 </p>
 
-Azure Purview accounts are created using ARM templates and are configured by using the Purview REST API's.
+Azure Purview accounts are created using ARM templates and are configured by using the Purview REST APIs.
 
 ## Table of Contents
 
+* [Introduction](#introduction)
 * [Prerequisites](#prerequisites)
 * [Deploy and Configure Purview Account](#deploy-and-configure-purview-account)
 * [Removing the QuickStart resources from the Purview Account](#removing-the-quickstart-resources-from-the-purview-account)
 * [Troubleshooting](#troubleshooting)
+
+## Introduction
+
+This QuickStart is a one-click solution to setup and configure Azure Purview Accounts. It creates storage accounts, loads sample data into them, connects as data sources to the Purview Account and creates Business Glossary Term with the help of ARM templates and Purview REST APIs.
 
 Click the following button to deploy the Purview QuickStart:-
 
@@ -20,6 +25,7 @@ Click the following button to deploy the Purview QuickStart:-
 Use the OneClick Deployment button above to start the deployment. Currently it takes ~25-30 minutes for one complete deployment.
 
 ## Prerequisites
+
 There are two main prerequisites before deploying the Quickstart:-
 * Create Application Registration
 * Assignment of required roles
