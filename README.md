@@ -9,24 +9,9 @@ Azure Purview accounts are created using ARM templates and are configured by usi
 ## Table of Contents
 
 * [Prerequisites](#prerequisites)
-* [Roles and Access Policies](#roles-and-access-policies)
-* [Template Parameter Details](#template-parameter-details)
-* [APIs](#apis)
+* [Deploy and Configure Purview Account](#deploy-and-configure-purview-account)
 * [Troubleshooting](#troubleshooting)
-
-Click the following button to deploy the Purview QuickStart:-
-
-[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fosamaemumba%2Fpurview-poc%2Fmain%2Fazuredeploy.json)
-
-
-* Use the OneClick Deployment button above to start the deployment. Currently it takes ~25-30 minutes for one complete deployment. 
-
-## Removing the QuickStart resources from the Purview Account
-* After the deployment is complete, the resources can be deleted by running the `deletePurviewFunctionTriggerUrl` URL from the deployment outputs as shown below:-
-
-<p align="center">
-  <img src="./images/purview-03-update.gif">
-</p>
+* [Removing the QuickStart resources from the Purview Account](#removing-the-quickstart-resources-from-the-purview-account)
 
 ## Prerequisites
 
@@ -64,7 +49,7 @@ The following table illustrates the required roles and permissions:-
   <img src="./images/purview-02.gif">
 </p>
 
-## Template Parameter Details
+## Deploy and Configure Purview Account
 
 * The following values are needed when using the OneClick Deployment ARM template:-
     * **Resource Group:** Name of the resource group. All the resources created by the template will be in this resource group.
@@ -79,6 +64,19 @@ The following table illustrates the required roles and permissions:-
     * **Aad App Client Id:** Client ID of the Application Registration created in prerequisite.
     * **Aad App Client Secret:** Client Secret of the Application Registration created in prerequisite.
     * **Location:** Location where the resources will be deployed. It is, by default, set to the region of the resource group. You can upadate it to any other region. Note that all the resources will be deployed to the same location/region, that is why while chhosing the loaction, make sure all the resources/services are available in that location/region.
+
+* Click the following button to deploy the Purview QuickStart:-
+
+     [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fosamaemumba%2Fpurview-poc%2Fmain%2Fazuredeploy.json)
+
+* Currently it takes ~25-30 minutes for one complete deployment. 
+
+## Removing the QuickStart resources from the Purview Account
+* After the deployment is complete, the resources can be deleted by running the `deletePurviewFunctionTriggerUrl` URL from the deployment outputs as shown below:-
+
+<p align="center">
+  <img src="./images/purview-03-update.gif">
+</p>
 
 
 ## Troubleshooting
