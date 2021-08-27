@@ -2,20 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "dataLakeAccountName": {
-      "type": "string",
-      "defaultValue": "dls",
-      "metadata": {
-        "description": "The name you provide will be appended with a unique sting to make it globally available. The field can contain only lowercase letters and numbers. Name must be between 1 and 11 characters."
-      }
-    },
-    "storageAccountName": {
-      "type": "string",
-      "defaultValue": "sa",
-      "metadata": {
-        "description": "The name you provide will be appended with a unique sting to make it globally available. The field can contain only lowercase letters and numbers. Name must be between 1 and 11 characters."
-      }
-    },
     "newOrExistingPurviewAccount": {
       "type": "string",
       "defaultValue": "new",
@@ -39,6 +25,20 @@
       "defaultValue": "[resourceGroup().name]",
       "metadata": {
         "description": "Povide the name of the resource group for the existing Purview account. Leave as it is if you are creating a new Purview account or if the existing Purview account is present in the same resource group where all other resources are going to be deployed. This resource group is required to get the Purview account path to assign required RBAC role(s) to the new or existing Purview account."
+      }
+    },
+    "dataLakeAccountName": {
+      "type": "string",
+      "defaultValue": "dls",
+      "metadata": {
+        "description": "The name you provide will be appended with a unique sting to make it globally available. The field can contain only lowercase letters and numbers. Name must be between 1 and 11 characters."
+      }
+    },
+    "storageAccountName": {
+      "type": "string",
+      "defaultValue": "sa",
+      "metadata": {
+        "description": "The name you provide will be appended with a unique sting to make it globally available. The field can contain only lowercase letters and numbers. Name must be between 1 and 11 characters."
       }
     },
     "keyVaultName": {
