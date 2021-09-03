@@ -21,7 +21,6 @@
     },
     "variables": {
       "dsIdentityName": "dsId",
-      "adfRG": "[resourceGroup().name]",
       "purviewResourceGroup": "[resourceGroup().name]",
       "roleAssignmentName": "[guid(resourceGroup().id)]"
     },
