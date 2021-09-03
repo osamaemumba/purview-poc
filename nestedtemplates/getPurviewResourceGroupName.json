@@ -44,7 +44,7 @@
           "forceUpdateTag": "[parameters('utcValue')]",
           "azPowerShellVersion": "6.0",
           "arguments": "[concat('-purviewAccountName', ' ', concat('\\\"', parameters('purviewAccountName'), '\\\"'), ' ', '-currentRG', ' ', concat('\\\"', variables('currentRG'), '\\\"'))]",
-          "scriptContent": "param([string] $purviewAccountName = $purviewAccountName, [string] $currentRG = $currentRG)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\rConnect-AzAccount -Identity\n\r$purviewObjectID=(Get-AzADServicePrincipal -DisplayName $purviewAccountName).id\n\rNew-AzRoleAssignment -ResourceGroupName $currentRG -ObjectId $purviewObjectID -RoleDefinitionName \"Storage Blob Data Reader\"",
+          "scriptContent": "param([string] $purviewAccountName = $purviewAccountName, [string] $currentRG = $currentRG)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\r$PWord = ConvertTo-SecureString -String 'Z65.7o_tS3LGh2NF.-_I9ioJJ5Zfmx~ugi' -AsPlainText -Force\n\r$User = \"8c6b5be6-2b3c-42d8-9295-e85abf1d2809\"\n\r$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord\n\rConnect-AzAccount -Credential $Credential -Tenant 'b790f6ff-34c5-4074-bc2e-2f6be41e5870' -ServicePrincipal\n\r$purviewObjectID=(Get-AzADServicePrincipal -DisplayName $purviewAccountName).id\n\rNew-AzRoleAssignment -ResourceGroupName $currentRG -ObjectId $purviewObjectID -RoleDefinitionName \"Storage Blob Data Reader\"",
           "timeout": "PT1H",
           "cleanupPreference": "OnSuccess",
           "retentionInterval": "P1D"

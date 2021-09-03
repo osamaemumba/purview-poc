@@ -34,7 +34,7 @@
         "name": "[variables('dsRoleAssignmentId1')]",
         "properties": {
             "roleDefinitionId": "[variables('dsRoleDefinitionId1')]",
-            "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('dsIdentityName')), '2018-11-30').principalId]",
+            "principalId": "8c6b5be6-2b3c-42d8-9295-e85abf1d2809",
             "scope": "[resourceGroup().id]",
             "principalType": "ServicePrincipal"
         },
@@ -48,7 +48,7 @@
         "name": "[variables('dsRoleAssignmentId2')]",
         "properties": {
             "roleDefinitionId": "[variables('dsRoleDefinitionId2')]",
-            "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('dsIdentityName')), '2018-11-30').principalId]",
+            "principalId": "8c6b5be6-2b3c-42d8-9295-e85abf1d2809",
             "scope": "[resourceGroup().id]",
             "principalType": "ServicePrincipal"
         },

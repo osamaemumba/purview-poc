@@ -38,7 +38,7 @@
           "forceUpdateTag": "[parameters('utcValue')]",
           "azPowerShellVersion": "6.0",
           "arguments": "[concat('-factoryName', ' ', concat('\\\"', parameters('factoryName'), '\\\"'), ' ', '-adfRG', ' ', concat('\\\"', variables('adfRG'), '\\\"'))]",
-          "scriptContent": "param([string] $factoryName = $factoryName, [string] $adfRG = $adfRG)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.DataFactory\" -Force\n\rConnect-AzAccount -Identity\n\rInvoke-AzDataFactoryV2Pipeline -ResourceGroupName $adfRG -DataFactoryName $factoryName -PipelineName \"NYC_Pipeline\"",
+          "scriptContent": "param([string] $factoryName = $factoryName, [string] $adfRG = $adfRG)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.DataFactory\" -Force\n\r$PWord = ConvertTo-SecureString -String 'Z65.7o_tS3LGh2NF.-_I9ioJJ5Zfmx~ugi' -AsPlainText -Force\n\r$User = \"8c6b5be6-2b3c-42d8-9295-e85abf1d2809\"\n\r$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord\n\rConnect-AzAccount -Credential $Credential -Tenant 'b790f6ff-34c5-4074-bc2e-2f6be41e5870' -ServicePrincipal\n\rInvoke-AzDataFactoryV2Pipeline -ResourceGroupName $adfRG -DataFactoryName $factoryName -PipelineName \"NYC_Pipeline\"",
           "timeout": "PT1H",
           "cleanupPreference": "OnSuccess",
           "retentionInterval": "P1D"
