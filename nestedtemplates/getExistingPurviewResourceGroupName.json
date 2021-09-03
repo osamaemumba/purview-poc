@@ -1,0 +1,54 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "utcValue": {
+        "type": "string",
+        "defaultValue": "[utcNow()]"
+      },
+      "location": {
+        "type": "string",
+        "metadata": {
+          "description": "Specifies the Azure location where the identity will be created."
+        }
+      },
+      "purviewAccountName": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "dsIdentityName": "dsId",
+      "adfRG": "[resourceGroup().name]"
+    },
+    "resources": [
+      {
+        "type": "Microsoft.Resources/deploymentScripts",
+        "apiVersion": "2020-10-01",
+        "name": "getExistingPurviewResourceGroupName",
+        "location": "[parameters('location')]",
+        "kind": "AzurePowerShell",
+        "dependsOn": [],
+        "identity": {
+          "type": "UserAssigned",
+          "userAssignedIdentities": {
+            "[resourceID('Microsoft.ManagedIdentity/userAssignedIdentities', variables('dsIdentityName'))]": {}
+          }
+        },
+        "properties": {
+          "forceUpdateTag": "[parameters('utcValue')]",
+          "azPowerShellVersion": "6.0",
+          "arguments": "[concat('-purviewAccountName', ' ', concat('\\\"', parameters('purviewAccountName'), '\\\"'))]",
+          "scriptContent": "param([string] $purviewAccountName = $purviewAccountName)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\rConnect-AzAccount -Identity\n\r$purviewResourceId=(Get-AzResource -Name $purviewAccountName).ResourceGroupName\n\r$DeploymentScriptOutputs = @{}\n\r$DeploymentScriptOutputs['purviewAccountName'] = $purviewAccountName",
+          "timeout": "PT1H",
+          "cleanupPreference": "OnSuccess",
+          "retentionInterval": "P1D"
+        }
+      }
+    ],
+    "outputs": {
+      "result": {
+        "value": "[reference('getExistingPurviewResourceGroupName').outputs.purviewAccountName]",
+        "type": "string"
+      }
+    }
+  }
