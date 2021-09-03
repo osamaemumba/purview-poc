@@ -60,7 +60,7 @@
         ],
         "properties": {
           "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')]",
-          "principalId": "[reference(resourceId(reference('purviewResourceGroup').outputs.purviewResourceGroup,'Microsoft.Purview/accounts', parameters('purviewAccountName')), '2020-12-01-preview', 'Full').identity.principalId]",
+          "principalId": "[reference(resourceId(reference('getExistingPurviewResourceGroupName').outputs.purviewResourceGroup,'Microsoft.Purview/accounts', parameters('purviewAccountName')), '2020-12-01-preview', 'Full').identity.principalId]",
           "principalType": "ServicePrincipal",
           "scope": "[resourceGroup().id]"
         }
