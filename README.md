@@ -34,6 +34,12 @@ There are two main prerequisites before deploying the Quickstart:-
 
 * Application registration needs to be created to enable authentication against the Azure Active Directory. Create an Application Registration in Azure Active Directory, which helps in establishing a trust relationship between application and the Microsoft identity platform.
 
+  The complete procedure of creating the Application Registration and copying Client id and secret is shown below:-
+
+    <p align="center">
+      <img src="./images/purview-01.gif">
+    </p>
+
 * Follow the steps below to create an application registration:-
 
     1. In Azure Homepage, search for `Active Directory` and select `Azure Active Directory` from the drop-down list.
@@ -91,17 +97,18 @@ There are two main prerequisites before deploying the Quickstart:-
       <img src="./images/purview-01-08.png">
     </p>
 
-    10. The complete procedure of creating the Application Registration and copying Client id and secret is shown below:-
-
-    <p align="center">
-      <img src="./images/purview-01.gif">
-    </p>
-
 
 ### 2. Assignment of required roles
 
 
 * To give application access to the subscription, in Azure Subscription console, add a role assignment of role `Purview Data Curator` and `Purview Data Source Administrator` to the Service Principal App registration created earlier.
+
+
+  The complete procedure of adding the required roles to the Application Registration is shown below:-
+
+    <p align="center">
+      <img src="./images/purview-02.gif">
+    </p>
 
   The following table illustrates the required roles and permissions:-
 
@@ -157,11 +164,6 @@ There are two main prerequisites before deploying the Quickstart:-
 
     6. Repeat the same procedure to add `Purview Data Source Administrator` role to the Application registration as well.
 
-    7. The complete procedure of adding the required roles to the Application Registration is shown below:-
-
-    <p align="center">
-      <img src="./images/purview-02.gif">
-    </p>
 
 ## Deploy and Configure Purview Account
 
@@ -186,25 +188,28 @@ There are two main prerequisites before deploying the Quickstart:-
 * Currently it takes ~25-30 minutes for one complete deployment. 
 
 ## Removing the QuickStart resources from the Purview Account
-* After the deployment is complete, resources can be deleted by following the steps below:-
 
-    1. On the deployment page, click on `Outputs`:-
+The complete procedure to remove the created resources is shown below:-
 
-    <p align="center">
-      <img src="./images/purview-03-update-01.png">
-    </p>
+  <p align="center">
+    <img src="./images/purview-03-update.gif">
+  </p>
+  
+After the deployment is complete, resources can be deleted by following the steps below:-
 
-    2. Copy and run the `deletePurviewFunctionTriggerUrl` URL from the deployment outputs:-
+  1. On the deployment page, click on `Outputs`:-
 
-    <p align="center">
-      <img src="./images/purview-03-update-02.png">
-    </p>
+  <p align="center">
+    <img src="./images/purview-03-update-01.png">
+  </p>
 
-    3. The complete procedure to remove the created resources is shown below:-
+  2. Copy and run the `deletePurviewFunctionTriggerUrl` URL from the deployment outputs:-
 
-    <p align="center">
-      <img src="./images/purview-03-update.gif">
-    </p>
+  <p align="center">
+    <img src="./images/purview-03-update-02.png">
+  </p>
+
+
 
 
 ## Troubleshooting
@@ -219,6 +224,12 @@ Here is a list of common problems one might encounter while deploying the templa
 
 In case the deployment is successful and there aren't any resources created. It can be verified by going to the Purview Account Portal. That is caused by the time Purview Account needs to set up properly. Resources can be provisioned using the `configurePurviewFunctionTriggerUrl` url from the deployment outputs. The same url needs to be used to trigger the creation function after some time, in case it does not work in first attempt. It should output `AzurePurview Creation function triggered successfully`. 
 
+The following gif illustrates the procedure for creation of resources:-
+
+<p align="center">
+  <img src="./images/purview-04.gif">
+</p>
+
 The following explains the working of deployment script in this case:-
 
   * Unresponsive APIs return a status code of 500.
@@ -227,11 +238,7 @@ The following explains the working of deployment script in this case:-
   * In case of status code 500 return, the script does 15 retries, with 1 minute wait each time.
   * If APIs are still unresponsive, the deployment script completes the deployment without provisioning resources.
 
-The following gif illustrates the procedure for creation of resources:-
 
-<p align="center">
-  <img src="./images/purview-04.gif">
-</p>
 
 #### 2. Failed Deployment
 
