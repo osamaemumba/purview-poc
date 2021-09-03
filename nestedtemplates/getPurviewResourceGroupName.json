@@ -22,6 +22,7 @@
     "variables": {
       "dsIdentityName": "dsId",
       "purviewResourceGroup": "[resourceGroup().name]",
+      "currentRG": "[resourceGroup().name]",
       "roleAssignmentName": "[guid(resourceGroup().id)]"
     },
     "resources": [
@@ -42,8 +43,8 @@
         "properties": {
           "forceUpdateTag": "[parameters('utcValue')]",
           "azPowerShellVersion": "6.0",
-          "arguments": "[concat('-purviewAccountName', ' ', concat('\\\"', parameters('purviewAccountName'), '\\\"'), ' ', '-currentRG', ' ', concat('\\\"', parameters('currentRG'), '\\\"'))]",
-          "scriptContent": "param([string] $purviewAccountName = $purviewAccountName, [string] $currentRG = $currentRG)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\rConnect-AzAccount -Identity\n\r$purviewObjectID=(Get-AzADServicePrincipal -DisplayName $purviewAccountName).id\n\rNew-AzRoleAssignment -ResourceGroupName $currentRG -ObjectId $purviewObjectID -RoleDefinitionName \"Storage Blob Data Reader\" -AllowDelegation",
+          "arguments": "[concat('-purviewAccountName', ' ', concat('\\\"', parameters('purviewAccountName'), '\\\"'), ' ', '-currentRG', ' ', concat('\\\"', variables('currentRG'), '\\\"'))]",
+          "scriptContent": "param([string] $purviewAccountName = $purviewAccountName, [string] $currentRG = $currentRG)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\rConnect-AzAccount -Identity\n\r$purviewObjectID=(Get-AzADServicePrincipal -DisplayName $purviewAccountName).id\n\rNew-AzRoleAssignment -ResourceGroupName $currentRG -ObjectId $purviewObjectID -RoleDefinitionName \"Storage Blob Data Reader\"",
           "timeout": "PT1H",
           "cleanupPreference": "OnSuccess",
           "retentionInterval": "P1D"
