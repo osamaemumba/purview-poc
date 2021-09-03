@@ -8,7 +8,7 @@
     },
     "variables": {
       "dsIdentityName": "dsId",
-      "dsRoleAssignmentId": "[guid(resourceGroup().id, variables('dsRoleDefinitionId'), resourceId('Microsoft.ManagedIdentity/identities', variables('dsIdentityName')))]",
+      "dsRoleAssignmentId": "[guid(resourceGroup().id, resourceId('Microsoft.ManagedIdentity/identities', variables('dsIdentityName')))]",
       "dsRoleDefinitionId1": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '673868aa-7521-48a0-acc6-0f60742d39f5')]",
       "dsRoleDefinitionId2": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '18d7d88d-d35e-4fb5-a5c3-7773c20a72d9')]"
     },
