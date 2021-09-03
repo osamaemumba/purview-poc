@@ -9,7 +9,8 @@
     "variables": {
       "dsIdentityName": "dsId",
       "dsRoleAssignmentId": "[guid(resourceGroup().id, variables('dsRoleDefinitionId'), resourceId('Microsoft.ManagedIdentity/identities', variables('dsIdentityName')))]",
-      "dsRoleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '673868aa-7521-48a0-acc6-0f60742d39f5')]"
+      "dsRoleDefinitionId1": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '673868aa-7521-48a0-acc6-0f60742d39f5')]",
+      "dsRoleDefinitionId2": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '18d7d88d-d35e-4fb5-a5c3-7773c20a72d9')]"
     },
     "resources": [
      {
@@ -21,9 +22,23 @@
         {
         "type": "Microsoft.Authorization/roleAssignments",
         "apiVersion": "2018-09-01-preview",
-        "name": "[variables('dsRoleAssignmentId')]",
+        "name": "[concat(variables('dsRoleAssignmentId'),'1')]",
         "properties": {
-            "roleDefinitionId": "[variables('dsRoleDefinitionId')]",
+            "roleDefinitionId": "[variables('dsRoleDefinitionId1')]",
+            "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('dsIdentityName')), '2018-11-30').principalId]",
+            "scope": "[resourceGroup().id]",
+            "principalType": "ServicePrincipal"
+        },
+        "dependsOn": [
+            "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('dsIdentityName'))]"
+        ]
+      },
+      {
+        "type": "Microsoft.Authorization/roleAssignments",
+        "apiVersion": "2018-09-01-preview",
+        "name": "[concat(variables('dsRoleAssignmentId'),'2')]",
+        "properties": {
+            "roleDefinitionId": "[variables('dsRoleDefinitionId2')]",
             "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('dsIdentityName')), '2018-11-30').principalId]",
             "scope": "[resourceGroup().id]",
             "principalType": "ServicePrincipal"

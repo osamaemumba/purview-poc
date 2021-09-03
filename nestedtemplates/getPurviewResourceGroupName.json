@@ -43,25 +43,10 @@
           "forceUpdateTag": "[parameters('utcValue')]",
           "azPowerShellVersion": "6.0",
           "arguments": "[concat('-purviewAccountName', ' ', concat('\\\"', parameters('purviewAccountName'), '\\\"'))]",
-          "scriptContent": "param([string] $purviewAccountName = $purviewAccountName)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\rConnect-AzAccount -Identity\n\r$purviewResourceGroup=(Get-AzResource -Name $purviewAccountName).ResourceGroupName\n\r$DeploymentScriptOutputs = @{}\n\r$DeploymentScriptOutputs['purviewResourceGroup'] = $purviewResourceGroup",
+          "scriptContent": "param([string] $purviewAccountName = $purviewAccountName)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\rConnect-AzAccount -Identity\n\r$purviewResourceGroup=(Get-AzResource -Name $purviewAccountName).ResourceGroupName\n\r$purviewObjectID=(Get-AzADServicePrincipal -DisplayName $purviewAccountName).id\n\rNew-AzRoleAssignment -ResourceGroupName $purviewResourceGroup -ObjectId $purviewObjectID -RoleDefinitionName \"Storage Blob Data Reader\" -AllowDelegation",
           "timeout": "PT1H",
           "cleanupPreference": "OnSuccess",
           "retentionInterval": "P1D"
-        }
-      },
-      {
-        "condition": "[equals(parameters('newOrExistingPurviewAccount'),'existing')]",
-        "type": "Microsoft.Authorization/roleAssignments",
-        "apiVersion": "2018-09-01-preview",
-        "name": "[variables('roleAssignmentName')]",
-        "dependsOn": [
-          "getExistingPurviewResourceGroupName"
-        ],
-        "properties": {
-          "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')]",
-          "principalId": "[reference(resourceId(reference('getExistingPurviewResourceGroupName').outputs.purviewResourceGroup,'Microsoft.Purview/accounts', parameters('purviewAccountName')), '2020-12-01-preview', 'Full').identity.principalId]",
-          "principalType": "ServicePrincipal",
-          "scope": "[resourceGroup().id]"
         }
       },
       {
@@ -77,11 +62,5 @@
           "scope": "[resourceGroup().id]"
         }
       }
-    ],
-    "outputs": {
-      "result": {
-        "value": "[reference('getExistingPurviewResourceGroupName').outputs.purviewResourceGroup]",
-        "type": "string"
-      }
-    }
+    ]
   }
