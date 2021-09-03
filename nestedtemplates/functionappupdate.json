@@ -29,31 +29,15 @@
         "metadata": {
           "description": "Create a new purview account or use an existing one"
         }
-      },
-      "purviewResourceGroup": {
-        "type": "string"
       }
     },
       "variables": {
         "functionAppName": "[concat('funcapp', uniqueString(resourceGroup().id))]",
         "configurePurviewFunctionName": "configurePurview",
         "deletePurviewFunctionName": "deletePurview",
-        "tenantId": "[subscription().tenantId]",
-        "roleAssignmentName": "[guid(resourceGroup().id)]"
+        "tenantId": "[subscription().tenantId]"
       },
   "resources": [
-    {
-      "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2018-09-01-preview",
-      "name": "[variables('roleAssignmentName')]",
-      "dependsOn": [],
-      "properties": {
-        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')]",
-        "principalId": "[reference(resourceId(parameters('purviewResourceGroup'),'Microsoft.Purview/accounts', parameters('purviewAccountName')), '2020-12-01-preview', 'Full').identity.principalId]",
-        "principalType": "ServicePrincipal",
-        "scope": "[resourceGroup().id]"
-      }
-    },
     {
       "type": "Microsoft.Web/sites/functions",
       "apiVersion": "2020-06-01",
