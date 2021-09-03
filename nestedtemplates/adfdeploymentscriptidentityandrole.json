@@ -8,7 +8,8 @@
     },
     "variables": {
       "dsIdentityName": "dsId",
-      "dsRoleAssignmentId": "[guid(resourceGroup().id, resourceId('Microsoft.ManagedIdentity/identities', variables('dsIdentityName')))]",
+      "dsRoleAssignmentId1": "[guid(resourceGroup().id, variables('dsRoleDefinitionId1'), resourceId('Microsoft.ManagedIdentity/identities', variables('dsIdentityName')))]",
+      "dsRoleAssignmentId2": "[guid(resourceGroup().id, variables('dsRoleDefinitionId2'), resourceId('Microsoft.ManagedIdentity/identities', variables('dsIdentityName')))]",
       "dsRoleDefinitionId1": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '673868aa-7521-48a0-acc6-0f60742d39f5')]",
       "dsRoleDefinitionId2": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '18d7d88d-d35e-4fb5-a5c3-7773c20a72d9')]"
     },
@@ -22,7 +23,7 @@
         {
         "type": "Microsoft.Authorization/roleAssignments",
         "apiVersion": "2018-09-01-preview",
-        "name": "[concat(variables('dsRoleAssignmentId'),'1')]",
+        "name": "[variables('dsRoleAssignmentId1')]",
         "properties": {
             "roleDefinitionId": "[variables('dsRoleDefinitionId1')]",
             "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('dsIdentityName')), '2018-11-30').principalId]",
@@ -36,7 +37,7 @@
       {
         "type": "Microsoft.Authorization/roleAssignments",
         "apiVersion": "2018-09-01-preview",
-        "name": "[concat(variables('dsRoleAssignmentId'),'2')]",
+        "name": "[variables('dsRoleAssignmentId1')]",
         "properties": {
             "roleDefinitionId": "[variables('dsRoleDefinitionId2')]",
             "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('dsIdentityName')), '2018-11-30').principalId]",
