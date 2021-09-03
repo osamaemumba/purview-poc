@@ -2,6 +2,9 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+      "newOrExistingPurviewAccount": {
+        "type": "string"
+      },
       "utcValue": {
         "type": "string",
         "defaultValue": "[utcNow()]"
@@ -18,10 +21,13 @@
     },
     "variables": {
       "dsIdentityName": "dsId",
-      "adfRG": "[resourceGroup().name]"
+      "adfRG": "[resourceGroup().name]",
+      "purviewResourceGroup": "[resourceGroup().name]",
+      "roleAssignmentName": "[guid(resourceGroup().id)]"
     },
     "resources": [
       {
+        "condition": "[equals(parameters('newOrExistingPurviewAccount'),'existing')]",
         "type": "Microsoft.Resources/deploymentScripts",
         "apiVersion": "2020-10-01",
         "name": "getExistingPurviewResourceGroupName",
@@ -42,6 +48,32 @@
           "timeout": "PT1H",
           "cleanupPreference": "OnSuccess",
           "retentionInterval": "P1D"
+        }
+      },
+      {
+        "condition": "[equals(parameters('newOrExistingPurviewAccount'),'existing')]",
+        "type": "Microsoft.Authorization/roleAssignments",
+        "apiVersion": "2018-09-01-preview",
+        "name": "[variables('roleAssignmentName')]",
+        "dependsOn": [],
+        "properties": {
+          "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')]",
+          "principalId": "[reference(resourceId(reference('purviewResourceGroup').outputs.purviewResourceGroup,'Microsoft.Purview/accounts', parameters('purviewAccountName')), '2020-12-01-preview', 'Full').identity.principalId]",
+          "principalType": "ServicePrincipal",
+          "scope": "[resourceGroup().id]"
+        }
+      },
+      {
+        "condition": "[equals(parameters('newOrExistingPurviewAccount'),'new')]",
+        "type": "Microsoft.Authorization/roleAssignments",
+        "apiVersion": "2018-09-01-preview",
+        "name": "[variables('roleAssignmentName')]",
+        "dependsOn": [],
+        "properties": {
+          "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')]",
+          "principalId": "[reference(resourceId(variables('purviewResourceGroup'),'Microsoft.Purview/accounts', parameters('purviewAccountName')), '2020-12-01-preview', 'Full').identity.principalId]",
+          "principalType": "ServicePrincipal",
+          "scope": "[resourceGroup().id]"
         }
       }
     ],

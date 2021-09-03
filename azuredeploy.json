@@ -72,8 +72,7 @@
     "configurePurviewFunctionName": "configurePurview",
     "location": "[resourceGroup().location]",
     "deletePurviewFunctionTriggerUrl": "[concat('http://', variables('functionAppName'), '.azurewebsites.net/api/', variables('deletePurviewFunctionName'))]",
-    "configurePurviewFunctionTriggerUrl": "[concat('http://', variables('functionAppName'), '.azurewebsites.net/api/', variables('configurePurviewFunctionName'))]",
-    "purviewResourceGroup": "[resourceGroup().name]"
+    "configurePurviewFunctionTriggerUrl": "[concat('http://', variables('functionAppName'), '.azurewebsites.net/api/', variables('configurePurviewFunctionName'))]"
   },
   "resources": [
     {
@@ -260,6 +259,30 @@
       }
     },
     {
+      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'new')]",
+      "name": "getNewPurviewResourceGroupName",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templatelink": {
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/getPurviewResourceGroupName.json"
+        },
+        "parameters": {
+            "location": {
+                "value": "[variables('location')]"
+            },
+            "purviewAccountName": {
+                "value": "[variables('purviewAccountName')]"
+            },
+            "newOrExistingPurviewAccount": {
+                "value": "[parameters('newOrExistingPurviewAccount')]"
+            }
+        }
+      }
+    },
+    {
       "condition": "[equals(parameters('newOrExistingPurviewAccount'),'existing')]",
       "name": "getExistingPurviewResourceGroupName",
       "type": "Microsoft.Resources/deployments",
@@ -268,7 +291,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/getExistingPurviewResourceGroupName.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/getPurviewResourceGroupName.json"
         },
         "parameters": {
             "location": {
@@ -276,6 +299,9 @@
             },
             "purviewAccountName": {
                 "value": "[parameters('purviewAccountName')]"
+            },
+            "newOrExistingPurviewAccount": {
+                "value": "[parameters('newOrExistingPurviewAccount')]"
             }
         }
       }
@@ -304,6 +330,7 @@
       "apiVersion": "2018-05-01",
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deployments','purviewDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','getNewPurviewResourceGroupName')]",
         "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
@@ -334,9 +361,6 @@
           },
           "newOrExistingPurviewAccount": {
               "value": "[parameters('newOrExistingPurviewAccount')]"
-          },
-          "purviewResourceGroup": {
-              "value": "[variables('purviewResourceGroup')]"
           }
         }
       }
@@ -347,7 +371,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments','getExistingPurviewResourceGroupName')]",
+        "[resourceId('Microsoft.Resources/deployments','getNewPurviewResourceGroupName')]",
         "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
@@ -378,9 +402,6 @@
           },
           "newOrExistingPurviewAccount": {
               "value": "[parameters('newOrExistingPurviewAccount')]"
-          },
-          "purviewResourceGroup": {
-              "value": "[reference('getExistingPurviewResourceGroupName').outputs.purviewResourceGroup.value]"
           }
         }
       }
