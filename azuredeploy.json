@@ -380,7 +380,7 @@
               "value": "[parameters('newOrExistingPurviewAccount')]"
           },
           "purviewResourceGroup": {
-              "value": "[reference('getExistingPurviewResourceGroupName').outputs.purviewAccountName.value]"
+              "value": "[reference('getExistingPurviewResourceGroupName').outputs.purviewResourceGroup.value]"
           }
         }
       }
