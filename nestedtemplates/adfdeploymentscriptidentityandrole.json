@@ -37,7 +37,7 @@
       {
         "type": "Microsoft.Authorization/roleAssignments",
         "apiVersion": "2018-09-01-preview",
-        "name": "[variables('dsRoleAssignmentId1')]",
+        "name": "[variables('dsRoleAssignmentId2')]",
         "properties": {
             "roleDefinitionId": "[variables('dsRoleDefinitionId2')]",
             "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('dsIdentityName')), '2018-11-30').principalId]",
