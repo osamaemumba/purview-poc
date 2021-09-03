@@ -24,6 +24,20 @@ Click the following button to deploy the Purview QuickStart:-
 
 Use the OneClick Deployment button above to start the deployment. Currently it takes ~25-30 minutes for one complete deployment.
 
+* The following values are needed when using the OneClick Deployment ARM template:-
+    * **Resource Group:** Name of the resource group.
+    * **Region:** Azure region in which to create the resource group.
+    * **New or existing Purview Account:** Whether to create a new Purview account or use an existing one.
+    * **Purview Account Name:** Name of the Azure Purview Account. In case of new Purview account, give a new name. To use an existing one, enter the name of existing purview account.
+    * **Purview Resource Group:** Povide the name of the resource group for the existing Purview account. Leave as it is if you are creating a new Purview account or if the existing Purview account is present in the same resource group where all other resources are going to be deployed.
+    * **Data Lake Account Name:** Name of the ADSL2 storage account. This storage account will be created and registered as a data source with Purview account.
+    * **Storage Account Name:** Name of the Blob storage account. This storage account will be created and registered as a data source with Purview account.
+    * **Key Vault Name:** Name of the Azure Key vault. This is used to store Client Secret needed to perform API calls.
+    * **Factory Name:** Name for the Azure Data Factory. This Data Factory will be created and load the data into the storage accounts.
+    * **Aad App Client Id:** Client ID of the Application Registration created in prerequisite.
+    * **Aad App Client Secret:** Client Secret of the Application Registration created in prerequisite.
+    * **Location:** Location where the resources will be deployed. It is, by default, set to the region of the resource group.
+
 ## Prerequisites
 
 There are two main prerequisites before deploying the Quickstart:-
@@ -163,29 +177,6 @@ There are two main prerequisites before deploying the Quickstart:-
     </p>
 
     6. Repeat the same procedure to add `Purview Data Source Administrator` role to the Application registration as well.
-
-
-## Deploy and Configure Purview Account
-
-* The following values are needed when using the OneClick Deployment ARM template:-
-    * **Resource Group:** Name of the resource group.
-    * **Region:** Azure region in which to create the resource group.
-    * **New or existing Purview Account:** Whether to create a new Purview account or use an existing one.
-    * **Purview Account Name:** Name of the Azure Purview Account. In case of new Purview account, give a new name. To use an existing one, enter the name of existing purview account.
-    * **Purview Resource Group:** Povide the name of the resource group for the existing Purview account. Leave as it is if you are creating a new Purview account or if the existing Purview account is present in the same resource group where all other resources are going to be deployed.
-    * **Data Lake Account Name:** Name of the ADSL2 storage account. This storage account will be created and registered as a data source with Purview account.
-    * **Storage Account Name:** Name of the Blob storage account. This storage account will be created and registered as a data source with Purview account.
-    * **Key Vault Name:** Name of the Azure Key vault. This is used to store Client Secret needed to perform API calls.
-    * **Factory Name:** Name for the Azure Data Factory. This Data Factory will be created and load the data into the storage accounts.
-    * **Aad App Client Id:** Client ID of the Application Registration created in prerequisite.
-    * **Aad App Client Secret:** Client Secret of the Application Registration created in prerequisite.
-    * **Location:** Location where the resources will be deployed. It is, by default, set to the region of the resource group.
-
-* Click the following button to deploy the Purview QuickStart:-
-
-     [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fosamaemumba%2Fpurview-poc%2Fmain%2Fazuredeploy.json)
-
-* Currently it takes ~25-30 minutes for one complete deployment. 
 
 ## Removing the QuickStart resources from the Purview Account
 
