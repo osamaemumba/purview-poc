@@ -20,6 +20,13 @@
         "description": "The name you provide will be appended with a unique sting to make it globally available. The Purview account name can contain only letters, numbers and hyphens. The first and last characters must be a letter or number. The hyphen(-) character must be immediately preceded and followed by a letter or number. Spaces are not allowed."
       }
     },
+    "purviewResourceGroup": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().name]",
+      "metadata": {
+        "description": "Povide the name of the resource group for the existing Purview account. Leave as it is if you are creating a new Purview account or if the existing Purview account is present in the same resource group where all other resources are going to be deployed. This resource group is required to get the Purview account path to assign required RBAC role(s) to the new or existing Purview account."
+      }
+    },
     "dataLakeAccountName": {
       "type": "string",
       "defaultValue": "dls",
@@ -259,68 +266,6 @@
       }
     },
     {
-      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'new')]",
-      "name": "getNewPurviewResourceGroupName",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2018-05-01",
-      "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
-        "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
-        "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
-        "[resourceId('Microsoft.Resources/deployments','keyVaultPermissionsUpdate')]",
-        "[resourceId('Microsoft.Resources/deployments','functionAppDeployment')]",
-        "[resourceId('Microsoft.Resources/deployments','runDataFactory')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/getPurviewResourceGroupName.json"
-        },
-        "parameters": {
-            "location": {
-                "value": "[variables('location')]"
-            },
-            "purviewAccountName": {
-                "value": "[variables('purviewAccountName')]"
-            },
-            "newOrExistingPurviewAccount": {
-                "value": "[parameters('newOrExistingPurviewAccount')]"
-            }
-        }
-      }
-    },
-    {
-      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'existing')]",
-      "name": "getExistingPurviewResourceGroupName",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2018-05-01",
-      "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
-        "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
-        "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
-        "[resourceId('Microsoft.Resources/deployments','keyVaultPermissionsUpdate')]",
-        "[resourceId('Microsoft.Resources/deployments','functionAppDeployment')]",
-        "[resourceId('Microsoft.Resources/deployments','runDataFactory')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/getPurviewResourceGroupName.json"
-        },
-        "parameters": {
-            "location": {
-                "value": "[variables('location')]"
-            },
-            "purviewAccountName": {
-                "value": "[parameters('purviewAccountName')]"
-            },
-            "newOrExistingPurviewAccount": {
-                "value": "[parameters('newOrExistingPurviewAccount')]"
-            }
-        }
-      }
-    },
-    {
       "name": "functionAppDeployment",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
@@ -344,7 +289,6 @@
       "apiVersion": "2018-05-01",
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deployments','purviewDeployment')]",
-        "[resourceId('Microsoft.Resources/deployments','getNewPurviewResourceGroupName')]",
         "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
@@ -375,6 +319,9 @@
           },
           "newOrExistingPurviewAccount": {
               "value": "[parameters('newOrExistingPurviewAccount')]"
+          },
+          "purviewResourceGroup": {
+              "value": "[parameters('purviewResourceGroup')]"
           }
         }
       }
@@ -385,7 +332,6 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments','getExistingPurviewResourceGroupName')]",
         "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
@@ -416,6 +362,9 @@
           },
           "newOrExistingPurviewAccount": {
               "value": "[parameters('newOrExistingPurviewAccount')]"
+          },
+          "purviewResourceGroup": {
+              "value": "[parameters('purviewResourceGroup')]"
           }
         }
       }
