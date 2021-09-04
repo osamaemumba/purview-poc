@@ -274,7 +274,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/getPurviewResourceGroupName.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/rprg/nestedtemplates/getPurviewResourceGroupName.json"
         },
         "parameters": {
             "location": {
@@ -301,7 +301,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/getPurviewResourceGroupName.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/rprg/nestedtemplates/getPurviewResourceGroupName.json"
         },
         "parameters": {
             "location": {
