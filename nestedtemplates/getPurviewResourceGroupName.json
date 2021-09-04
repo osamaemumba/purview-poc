@@ -12,7 +12,13 @@
         "description": "Specifies the Azure location where the identity will be created."
       }
     },
-    "purviewAccountName": {
+    "newPurviewAccountName": {
+      "type": "string"
+    },
+    "existingPurviewAccountName": {
+      "type": "string"
+    },
+    "newOrExistingPurviewAccount": {
       "type": "string"
     }
   },
@@ -21,9 +27,10 @@
   },
   "resources": [
     {
+      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'new')]",
       "type": "Microsoft.Resources/deploymentScripts",
       "apiVersion": "2020-10-01",
-      "name": "getPurviewResourceGroupName",
+      "name": "getNewPurviewResourceGroupName",
       "location": "[parameters('location')]",
       "kind": "AzurePowerShell",
       "dependsOn": [],
@@ -36,7 +43,31 @@
       "properties": {
         "forceUpdateTag": "[parameters('utcValue')]",
         "azPowerShellVersion": "6.0",
-        "arguments": "[concat('-purviewAccountName', ' ', concat('\\\"', parameters('purviewAccountName'), '\\\"'))]",
+        "arguments": "[concat('-purviewAccountName', ' ', concat('\\\"', parameters('newPurviewAccountName'), '\\\"'))]",
+        "scriptContent": "param([string] $purviewAccountName = $purviewAccountName)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\rConnect-AzAccount -Identity\n\r$purviewResourceGroup=(Get-AzResource -Name $purviewAccountName).ResourceId\n\r$DeploymentScriptOutputs = @{}\n\r$DeploymentScriptOutputs['purviewResourceGroup'] = $purviewResourceGroup",
+        "timeout": "PT1H",
+        "cleanupPreference": "OnSuccess",
+        "retentionInterval": "P1D"
+      }
+    },
+    {
+      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'existing')]",
+      "type": "Microsoft.Resources/deploymentScripts",
+      "apiVersion": "2020-10-01",
+      "name": "getExistingPurviewResourceGroupName",
+      "location": "[parameters('location')]",
+      "kind": "AzurePowerShell",
+      "dependsOn": [],
+      "identity": {
+        "type": "UserAssigned",
+        "userAssignedIdentities": {
+          "[resourceID('Microsoft.ManagedIdentity/userAssignedIdentities', variables('dsIdentityName'))]": {}
+        }
+      },
+      "properties": {
+        "forceUpdateTag": "[parameters('utcValue')]",
+        "azPowerShellVersion": "6.0",
+        "arguments": "[concat('-purviewAccountName', ' ', concat('\\\"', parameters('existingPurviewAccountName'), '\\\"'))]",
         "scriptContent": "param([string] $purviewAccountName = $purviewAccountName)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\rConnect-AzAccount -Identity\n\r$purviewResourceGroup=(Get-AzResource -Name $purviewAccountName).ResourceId\n\r$DeploymentScriptOutputs = @{}\n\r$DeploymentScriptOutputs['purviewResourceGroup'] = $purviewResourceGroup",
         "timeout": "PT1H",
         "cleanupPreference": "OnSuccess",
@@ -45,8 +76,14 @@
     }
   ],
   "outputs": {
-    "getPurviewResourceGroupName": {
-      "value": "[reference('getPurviewResourceGroupName').outputs.purviewResourceGroup]",
+    "newPurviewResourceGroup": {
+      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'new')]",
+      "value": "[reference('getNewPurviewResourceGroupName').outputs.newPurviewResourceGroup]",
+      "type": "string"
+    },
+    "existingPurviewResourceGroup": {
+      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'existing')]",
+      "value": "[reference('getExistingPurviewResourceGroupName').outputs.existingPurviewResourceGroup]",
       "type": "string"
     }
   }

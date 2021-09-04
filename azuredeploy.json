@@ -258,8 +258,7 @@
         }
       }
     },
-    { 
-      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'new')]",
+    {
       "name": "getNewPurviewResourceGroupName",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
@@ -281,36 +280,14 @@
             "location": {
                 "value": "[variables('location')]"
             },
-            "purviewAccountName": {
+            "newPurviewAccountName": {
                 "value": "[variables('purviewAccountName')]"
-            }
-        }
-      }
-    },
-    {
-      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'existing')]",
-      "name": "getExistingPurviewResourceGroupName",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2018-05-01",
-      "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
-        "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
-        "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
-        "[resourceId('Microsoft.Resources/deployments','keyVaultPermissionsUpdate')]",
-        "[resourceId('Microsoft.Resources/deployments','functionAppDeployment')]",
-        "[resourceId('Microsoft.Resources/deployments','runDataFactory')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/rprg/nestedtemplates/getPurviewResourceGroupName.json"
-        },
-        "parameters": {
-            "location": {
-                "value": "[variables('location')]"
             },
-            "purviewAccountName": {
+            "existingPurviewAccountName": {
                 "value": "[parameters('purviewAccountName')]"
+            },
+            "newOrExistingPurviewAccount": {
+                "value": "[variables('newOrExistingPurviewAccount')]"
             }
         }
       }
@@ -372,7 +349,7 @@
               "value": "[parameters('newOrExistingPurviewAccount')]"
           },
           "purviewResourceGroup": {
-              "value": "[reference('getNewPurviewResourceGroupName').outputs.purviewResourceGroup.value]"
+              "value": "[reference('getNewPurviewResourceGroupName').outputs.newPurviewResourceGroup.value]"
           }
         }
       }
@@ -416,7 +393,7 @@
               "value": "[parameters('newOrExistingPurviewAccount')]"
           },
           "purviewResourceGroup": {
-              "value": "[reference('getExistingPurviewResourceGroupName').outputs.purviewResourceGroup.value]"
+              "value": "[reference('getExistingPurviewResourceGroupName').outputs.existingPurviewResourceGroup.value]"
           }
         }
       }
