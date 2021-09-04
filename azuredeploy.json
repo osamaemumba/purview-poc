@@ -259,7 +259,6 @@
       }
     },
     {
-      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'new')]",
       "name": "getNewPurviewResourceGroupName",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
@@ -288,7 +287,6 @@
       }
     },
     {
-      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'existing')]",
       "name": "getExistingPurviewResourceGroupName",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
