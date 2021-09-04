@@ -45,7 +45,7 @@
     }
   ],
   "outputs": {
-    "result": {
+    "getPurviewResourceGroupName": {
       "value": "[reference('getPurviewResourceGroupName').outputs.purviewResourceGroup]",
       "type": "string"
     }
