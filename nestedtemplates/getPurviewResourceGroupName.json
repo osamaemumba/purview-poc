@@ -44,7 +44,7 @@
         "forceUpdateTag": "[parameters('utcValue')]",
         "azPowerShellVersion": "6.0",
         "arguments": "[concat('-purviewAccountName', ' ', concat('\\\"', parameters('newPurviewAccountName'), '\\\"'))]",
-        "scriptContent": "param([string] $purviewAccountName = $purviewAccountName)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\rConnect-AzAccount -Identity\n\r$purviewResourceGroup=(Get-AzResource -Name $purviewAccountName).ResourceId\n\r$DeploymentScriptOutputs = @{}\n\r$DeploymentScriptOutputs['purviewResourceGroup'] = $purviewResourceGroup",
+        "scriptContent": "param([string] $purviewAccountName = $purviewAccountName)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\rConnect-AzAccount -Identity\n\r$purviewResourceGroup=(Get-AzResource -Name $purviewAccountName).ResourceGroupName\n\r$DeploymentScriptOutputs = @{}\n\r$DeploymentScriptOutputs['newPurviewResourceGroup'] = $purviewResourceGroup",
         "timeout": "PT1H",
         "cleanupPreference": "OnSuccess",
         "retentionInterval": "P1D"
@@ -68,7 +68,7 @@
         "forceUpdateTag": "[parameters('utcValue')]",
         "azPowerShellVersion": "6.0",
         "arguments": "[concat('-purviewAccountName', ' ', concat('\\\"', parameters('existingPurviewAccountName'), '\\\"'))]",
-        "scriptContent": "param([string] $purviewAccountName = $purviewAccountName)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\rConnect-AzAccount -Identity\n\r$purviewResourceGroup=(Get-AzResource -Name $purviewAccountName).ResourceId\n\r$DeploymentScriptOutputs = @{}\n\r$DeploymentScriptOutputs['purviewResourceGroup'] = $purviewResourceGroup",
+        "scriptContent": "param([string] $purviewAccountName = $purviewAccountName)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\rConnect-AzAccount -Identity\n\r$purviewResourceGroup=(Get-AzResource -Name $purviewAccountName).ResourceGroupName\n\r$DeploymentScriptOutputs = @{}\n\r$DeploymentScriptOutputs['existingPurviewResourceGroup'] = $purviewResourceGroup",
         "timeout": "PT1H",
         "cleanupPreference": "OnSuccess",
         "retentionInterval": "P1D"
