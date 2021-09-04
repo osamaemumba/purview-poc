@@ -263,7 +263,15 @@
       "name": "getNewPurviewResourceGroupName",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
-      "dependsOn": [],
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments','purviewDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','keyVaultPermissionsUpdate')]",
+        "[resourceId('Microsoft.Resources/deployments','functionAppDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','runDataFactory')]"
+      ],
       "properties": {
         "mode": "Incremental",
         "templatelink": {
@@ -284,7 +292,14 @@
       "name": "getExistingPurviewResourceGroupName",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
-      "dependsOn": [],
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','keyVaultPermissionsUpdate')]",
+        "[resourceId('Microsoft.Resources/deployments','functionAppDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','runDataFactory')]"
+      ],
       "properties": {
         "mode": "Incremental",
         "templatelink": {
