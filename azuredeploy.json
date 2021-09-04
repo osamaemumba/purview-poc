@@ -259,7 +259,7 @@
       }
     },
     {
-      "name": "getNewPurviewResourceGroupName",
+      "name": "getPurviewResourceGroupName",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "dependsOn": [
