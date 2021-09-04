@@ -2,17 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "newOrExistingPurviewAccount": {
-      "type": "string",
-      "defaultValue": "new",
-      "allowedValues": [
-        "new",
-        "existing"
-      ],
-      "metadata": {
-        "description": "Create a new purview account or use an existing one"
-      }
-    },
     "purviewAccountName": {
       "type": "string",
       "defaultValue": "purv",
@@ -90,7 +79,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/keyvault.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/rprg/nestedtemplates/keyvault.json"
         },
         "parameters": {
             "location": {
@@ -113,7 +102,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/storageaccount.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/rprg/nestedtemplates/storageaccount.json"
         },
         "parameters": {
             "location": {
@@ -133,7 +122,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/dlsaccount.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/rprg/nestedtemplates/dlsaccount.json"
         },
         "parameters": {
             "location": {
@@ -156,7 +145,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/dataFactory.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/rprg/nestedtemplates/dataFactory.json"
         },
         "parameters": {
             "location": {
@@ -184,7 +173,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/adfdeploymentscriptidentityandrole.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/rprg/nestedtemplates/adfdeploymentscriptidentityandrole.json"
         },
         "parameters": {
             "location": {
@@ -205,7 +194,7 @@
         "properties": {
           "mode": "Incremental",
           "templatelink": {
-            "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/keyvaultpermissionsupdate.json"
+            "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/rprg/nestedtemplates/keyvaultpermissionsupdate.json"
           },
           "parameters": {
               "location": {
@@ -232,7 +221,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/runadf.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/rprg/nestedtemplates/runadf.json"
         },
         "parameters": {
             "location": {
@@ -253,7 +242,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/purviewaccount.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/rprg/nestedtemplates/purviewaccount.json"
         },
         "parameters": {
             "location": {
@@ -266,6 +255,48 @@
       }
     },
     {
+      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'new')]",
+      "name": "getNewPurviewResourceGroupName",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templatelink": {
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/getPurviewResourceGroupName.json"
+        },
+        "parameters": {
+            "location": {
+                "value": "[variables('location')]"
+            },
+            "purviewAccountName": {
+                "value": "[variables('purviewAccountName')]"
+            }
+        }
+      }
+    },
+    {
+      "condition": "[equals(parameters('newOrExistingPurviewAccount'),'existing')]",
+      "name": "getExistingPurviewResourceGroupName",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templatelink": {
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/getPurviewResourceGroupName.json"
+        },
+        "parameters": {
+            "location": {
+                "value": "[variables('location')]"
+            },
+            "purviewAccountName": {
+                "value": "[parameters('purviewAccountName')]"
+            }
+        }
+      }
+    },
+    {
       "name": "functionAppDeployment",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
@@ -273,7 +304,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/functionapp.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/rprg/nestedtemplates/functionapp.json"
         },
         "parameters": {
             "location": {
@@ -289,6 +320,7 @@
       "apiVersion": "2018-05-01",
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deployments','purviewDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','getNewPurviewResourceGroupName')]",
         "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
@@ -299,7 +331,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/functionappupdate.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/rprg/nestedtemplates/functionappupdate.json"
         },
         "parameters": {
           "aadAppClientId": {
@@ -321,7 +353,7 @@
               "value": "[parameters('newOrExistingPurviewAccount')]"
           },
           "purviewResourceGroup": {
-              "value": "[parameters('purviewResourceGroup')]"
+              "value": "[reference('getNewPurviewResourceGroupName').outputs.purviewResourceGroup.value]"
           }
         }
       }
@@ -333,6 +365,7 @@
       "apiVersion": "2018-05-01",
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','getExistingPurviewResourceGroupName')]",
         "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','keyVaultPermissionsUpdate')]",
@@ -342,7 +375,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/functionappupdate.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/rprg/nestedtemplates/functionappupdate.json"
         },
         "parameters": {
           "aadAppClientId": {
@@ -364,7 +397,7 @@
               "value": "[parameters('newOrExistingPurviewAccount')]"
           },
           "purviewResourceGroup": {
-              "value": "[parameters('purviewResourceGroup')]"
+              "value": "[reference('getExistingPurviewResourceGroupName').outputs.purviewResourceGroup.value]"
           }
         }
       }
@@ -386,7 +419,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/triggerconfigurepurviewfunctionurl.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/rprg/nestedtemplates/triggerconfigurepurviewfunctionurl.json"
         },
         "parameters": {
             "location": {
@@ -411,7 +444,7 @@
       "properties": {
         "mode": "Incremental",
         "templatelink": {
-          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/main/nestedtemplates/triggerconfigurepurviewfunctionurl.json"
+          "uri": "https://raw.githubusercontent.com/osamaemumba/purview-poc/rprg/nestedtemplates/triggerconfigurepurviewfunctionurl.json"
         },
         "parameters": {
             "location": {

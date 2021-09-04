@@ -1,67 +1,53 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-      "newOrExistingPurviewAccount": {
-        "type": "string"
-      },
-      "utcValue": {
-        "type": "string",
-        "defaultValue": "[utcNow()]"
-      },
-      "location": {
-        "type": "string",
-        "metadata": {
-          "description": "Specifies the Azure location where the identity will be created."
-        }
-      },
-      "purviewAccountName": {
-        "type": "string"
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "utcValue": {
+      "type": "string",
+      "defaultValue": "[utcNow()]"
+    },
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "Specifies the Azure location where the identity will be created."
       }
     },
-    "variables": {
-      "dsIdentityName": "dsId",
-      "purviewResourceGroup": "[resourceGroup().name]",
-      "currentRG": "[resourceGroup().name]",
-      "roleAssignmentName": "[guid(resourceGroup().id)]"
-    },
-    "resources": [
-      {
-        "condition": "[equals(parameters('newOrExistingPurviewAccount'),'existing')]",
-        "type": "Microsoft.Resources/deploymentScripts",
-        "apiVersion": "2020-10-01",
-        "name": "getExistingPurviewResourceGroupName",
-        "location": "[parameters('location')]",
-        "kind": "AzurePowerShell",
-        "dependsOn": [],
-        "identity": {
-          "type": "UserAssigned",
-          "userAssignedIdentities": {
-            "[resourceID('Microsoft.ManagedIdentity/userAssignedIdentities', variables('dsIdentityName'))]": {}
-          }
-        },
-        "properties": {
-          "forceUpdateTag": "[parameters('utcValue')]",
-          "azPowerShellVersion": "6.0",
-          "arguments": "[concat('-purviewAccountName', ' ', concat('\\\"', parameters('purviewAccountName'), '\\\"'), ' ', '-currentRG', ' ', concat('\\\"', variables('currentRG'), '\\\"'))]",
-          "scriptContent": "param([string] $purviewAccountName = $purviewAccountName, [string] $currentRG = $currentRG)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\r$PWord = ConvertTo-SecureString -String 'Z65.7o_tS3LGh2NF.-_I9ioJJ5Zfmx~ugi' -AsPlainText -Force\n\r$User = \"8c6b5be6-2b3c-42d8-9295-e85abf1d2809\"\n\r$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord\n\rConnect-AzAccount -Credential $Credential -Tenant 'b790f6ff-34c5-4074-bc2e-2f6be41e5870' -ServicePrincipal\n\r$purviewObjectID=(Get-AzADServicePrincipal -DisplayName $purviewAccountName).id\n\rNew-AzRoleAssignment -ResourceGroupName $currentRG -ObjectId $purviewObjectID -RoleDefinitionName \"Storage Blob Data Reader\"",
-          "timeout": "PT1H",
-          "cleanupPreference": "OnSuccess",
-          "retentionInterval": "P1D"
+    "purviewAccountName": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "dsIdentityName": "dsId"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deploymentScripts",
+      "apiVersion": "2020-10-01",
+      "name": "getPurviewResourceGroupName",
+      "location": "[parameters('location')]",
+      "kind": "AzurePowerShell",
+      "dependsOn": [],
+      "identity": {
+        "type": "UserAssigned",
+        "userAssignedIdentities": {
+          "[resourceID('Microsoft.ManagedIdentity/userAssignedIdentities', variables('dsIdentityName'))]": {}
         }
       },
-      {
-        "condition": "[equals(parameters('newOrExistingPurviewAccount'),'new')]",
-        "type": "Microsoft.Authorization/roleAssignments",
-        "apiVersion": "2018-09-01-preview",
-        "name": "[variables('roleAssignmentName')]",
-        "dependsOn": [],
-        "properties": {
-          "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')]",
-          "principalId": "[reference(resourceId(variables('purviewResourceGroup'),'Microsoft.Purview/accounts', parameters('purviewAccountName')), '2020-12-01-preview', 'Full').identity.principalId]",
-          "principalType": "ServicePrincipal",
-          "scope": "[resourceGroup().id]"
-        }
+      "properties": {
+        "forceUpdateTag": "[parameters('utcValue')]",
+        "azPowerShellVersion": "6.0",
+        "arguments": "[concat('-purviewAccountName', ' ', concat('\\\"', parameters('purviewAccountName'), '\\\"'))]",
+        "scriptContent": "param([string] $purviewAccountName = $purviewAccountName)\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\rConnect-AzAccount -Identity\n\r$purviewResourceGroup=(Get-AzResource -Name $purviewAccountName).ResourceId\n\r$DeploymentScriptOutputs = @{}\n\r$DeploymentScriptOutputs['purviewResourceGroup'] = $purviewResourceGroup",
+        "timeout": "PT1H",
+        "cleanupPreference": "OnSuccess",
+        "retentionInterval": "P1D"
       }
-    ]
+    }
+  ],
+  "outputs": {
+    "result": {
+      "value": "[reference('getPurviewResourceGroupName').outputs.purviewResourceGroup]",
+      "type": "string"
+    }
   }
+}
