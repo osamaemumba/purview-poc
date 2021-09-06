@@ -10,7 +10,7 @@ Azure Purview accounts are created using ARM templates and are configured by usi
 
 * [Introduction](#introduction)
 * [Prerequisites](#prerequisites)
-* [Deploy and Configure Purview Account](#deploy-and-configure-purview-account)
+* [Post Deployment](#post-deployment)
 * [Removing the QuickStart resources from the Purview Account](#removing-the-quickstart-resources-from-the-purview-account)
 * [Troubleshooting](#troubleshooting)
 
