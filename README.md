@@ -98,7 +98,7 @@ There are two main prerequisites before deploying the Quickstart:-
       <img src="./images/purview-01-06.png">
     </p>
 
-    8. Enter a description, select the expiration of secret id and click `Add` at the bottom:-
+  8. Enter a description, select the expiration of secret id and click `Add` at the bottom:-
 
     <p align="center">
       <img src="./images/purview-01-07-updated.png">
@@ -181,68 +181,70 @@ There are two main prerequisites before deploying the Quickstart:-
 
 After the deployment is complete, follow the steps given below to view the artifacts created inside the Purview Studio:
 
-  1. Click on the 'Go to resource group' button and then click on the Purview account name.
+1. Click on the `Go to resource group` button and then click on the Purview account name.
 
-    <p align="center">
-      <img src="./images/post-deployment/1.png">
-    </p>
+<p align="center">
+  <img src="./images/post-deployment/1.PNG">
+</p>
     
-    <p align="center">
-      <img src="./images/post-deployment/2.png">
-    </p>
-    
-  2. Click on the 'Open' link inside the box labelled as 'Open Purview Studio'. The purview studio will be browsed in a new tab.
+<p align="center">
+  <img src="./images/post-deployment/2.PNG">
+</p>
 
-   <p align="center">
-      <img src="./images/post-deployment/3.png">
-    </p>
-    
-  3. You will see that there are two sources, a few assets and a glossary term created in the Purview Studio.
+2. Click on the `Open` link inside the box labelled as 'Open Purview Studio'. The purview studio will be browsed in a new tab.
 
-    <p align="center">
-      <img src="./images/post-deployment/4.png">
-    </p>
+<p align="center">
+  <img src="./images/post-deployment/3.PNG">
+</p>
 
-  4. Now click on the 'Data map' tab in the left vertical panel. You will see two sources (blob storage and data lake storage) registered as data sources.
+3. You will see that there are two sources, a few assets and a glossary term created in the Purview Studio.
 
-    <p align="center">
-      <img src="./images/post-deployment/5-a.png">
-    </p>
-    
-  5. Now click on 'View details' link inside data lake source box. You will see a scan already created.
-  
-    <p align="center">
-      <img src="./images/post-deployment/5-b.png">
-    </p>
-    
-    <p align="center">
-      <img src="./images/post-deployment/6-a.png">
-    </p>
-    
-  6. Click on the 'Scans' tab and click on the scan.
-  
-      
-    <p align="center">
-      <img src="./images/post-deployment/6-b.png">
-    </p>
-    
-  7. You will see a successful scan run (or may be still under progress or queued).
-  
-    <p align="center">
-      <img src="./images/post-deployment/6-c.png">
-    </p>
-    
-  8. Now click on the 'Data catalog' tab in the left vertical panel and click on the 'Manage glossary' box.
+<p align="center">
+  <img src="./images/post-deployment/4.png">
+</p>
 
-    <p align="center">
-      <img src="./images/post-deployment/7-a.png">
-    </p>
+4. Now click on the `Data map` tab in the left vertical panel. You will see two sources (blob storage and data lake storage) registered as data sources.
 
-  9. You will a demo glossary term.
-  
-    <p align="center">
-      <img src="./images/post-deployment/7-b.png">
-    </p>
+<p align="center">
+  <img src="./images/post-deployment/5-a.png">
+</p>
+
+5. Now click on `View details` link inside data lake source box. You will see a scan already created.
+
+<p align="center">
+  <img src="./images/post-deployment/5-b.png">
+</p>
+
+<p align="center">
+  <img src="./images/post-deployment/6-a.PNG">
+</p>
+
+6. Click on the `Scans` tab and click on the scan.
+
+
+<p align="center">
+  <img src="./images/post-deployment/6-b.PNG">
+</p>
+
+7. You will see a successful scan run (or may be still under progress or queued).
+
+<p align="center">
+  <img src="./images/post-deployment/6-c.PNG">
+</p>
+
+8. For the blob storage data source, repeat the steps 5,6 and 7.
+
+9. Now click on the `Data catalog` tab in the left vertical panel and click on the `Manage glossary` box.
+
+<p align="center">
+  <img src="./images/post-deployment/7-a.png">
+</p>
+
+10. You will a demo glossary term.
+
+<p align="center">
+  <img src="./images/post-deployment/7-b.PNG">
+</p>
 
 ## Removing the QuickStart resources from the Purview Account
 
