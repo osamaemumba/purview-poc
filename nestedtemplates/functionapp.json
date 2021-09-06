@@ -92,7 +92,7 @@
                 ],
                 "properties": {
                   "RepoUrl": "https://github.com/osamaemumba/purview-poc",
-                  "branch": "rprg",
+                  "branch": "main",
                   "IsManualIntegration": true
                 }
            }
