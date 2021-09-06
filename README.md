@@ -29,7 +29,6 @@ Use the OneClick Deployment button above to start the deployment. Currently it t
     * **Region:** Azure region in which to create the resource group.
     * **New or existing Purview Account:** Whether to create a new Purview account or use an existing one.
     * **Purview Account Name:** Name of the Azure Purview Account. In case of new Purview account, give a new name. To use an existing one, enter the name of existing purview account.
-    * **Purview Resource Group:** Povide the name of the resource group for the existing Purview account. Leave as it is if you are creating a new Purview account or if the existing Purview account is present in the same resource group where all other resources are going to be deployed.
     * **Data Lake Account Name:** Name of the ADSL2 storage account. This storage account will be created and registered as a data source with Purview account.
     * **Storage Account Name:** Name of the Blob storage account. This storage account will be created and registered as a data source with Purview account.
     * **Key Vault Name:** Name of the Azure Key vault. This is used to store Client Secret needed to perform API calls.
@@ -177,6 +176,73 @@ There are two main prerequisites before deploying the Quickstart:-
     </p>
 
     6. Repeat the same procedure to add `Purview Data Source Administrator` role to the Application registration as well.
+
+## Post Deployment
+
+After the deployment is complete, follow the steps given below to view the artifacts created inside the Purview Studio:
+
+  1. Click on the 'Go to resource group' button and then click on the Purview account name.
+
+    <p align="center">
+      <img src="./images/post-deployment/1.png">
+    </p>
+    
+    <p align="center">
+      <img src="./images/post-deployment/2.png">
+    </p>
+    
+  2. Click on the 'Open' link inside the box labelled as 'Open Purview Studio'. The purview studio will be browsed in a new tab.
+
+   <p align="center">
+      <img src="./images/post-deployment/3.png">
+    </p>
+    
+  3. You will see that there are two sources, a few assets and a glossary term created in the Purview Studio.
+
+    <p align="center">
+      <img src="./images/post-deployment/4.png">
+    </p>
+
+  4. Now click on the 'Data map' tab in the left vertical panel. You will see two sources (blob storage and data lake storage) registered as data sources.
+
+    <p align="center">
+      <img src="./images/post-deployment/5-a.png">
+    </p>
+    
+  5. Now click on 'View details' link inside data lake source box. You will see a scan already created.
+  
+    <p align="center">
+      <img src="./images/post-deployment/5-b.png">
+    </p>
+    
+    <p align="center">
+      <img src="./images/post-deployment/6-a.png">
+    </p>
+    
+  6. Click on the 'Scans' tab and click on the scan.
+  
+      
+    <p align="center">
+      <img src="./images/post-deployment/6-b.png">
+    </p>
+    
+  7. You will see a successful scan run (or may be still under progress or queued).
+  
+    <p align="center">
+      <img src="./images/post-deployment/6-c.png">
+    </p>
+    
+  8. Now click on the 'Data catalog' tab in the left vertical panel and click on the 'Manage glossary' box.
+
+    <p align="center">
+      <img src="./images/post-deployment/7-a.png">
+    </p>
+
+  9. You will a demo glossary term.
+  
+    <p align="center">
+      <img src="./images/post-deployment/7-b.png">
+    </p>
 
 ## Removing the QuickStart resources from the Purview Account
 
