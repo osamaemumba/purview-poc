@@ -20,6 +20,12 @@
     },
     "newOrExistingPurviewAccount": {
       "type": "string"
+    },
+    "aadAppClientId": {
+      "type": "string"
+    },
+    "keyVaultName": {
+      "type": "string"
     }
   },
   "variables": {
@@ -43,8 +49,8 @@
       "properties": {
         "forceUpdateTag": "[parameters('utcValue')]",
         "azPowerShellVersion": "6.0",
-        "arguments": "[concat('-newPurviewAccountName', ' ', concat('\\\"', parameters('newPurviewAccountName'), '\\\"'))]",
-        "scriptContent": "param([string] $newPurviewAccountName = $newPurviewAccountName)\n\r$newPurviewAccountName\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\r$PWord = ConvertTo-SecureString -String 'd-oOBlNI6fl~-eJSdI2Ib.fjb1_KKAr7B8' -AsPlainText -Force\n\r$User = \"8c6b5be6-2b3c-42d8-9295-e85abf1d2809\"\n\r$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord\n\rConnect-AzAccount -Credential $Credential -Tenant 'b790f6ff-34c5-4074-bc2e-2f6be41e5870' -ServicePrincipal\n\rImport-Module -Name \"Az.Resources\" -Force\n\r$purviewResourceGroup=(Get-AzResource -Name $newPurviewAccountName).ResourceGroupName\n\rWrite-Output \"checkoutput\"$purviewResourceGroup\n\r$DeploymentScriptOutputs = @{}\n\r$DeploymentScriptOutputs['newPurviewResourceGroup'] = $purviewResourceGroup",
+        "arguments": "[concat('-newPurviewAccountName', ' ', concat('\\\"', parameters('newPurviewAccountName'), '\\\"'), ' ', '-keyVaultName', ' ', concat('\\\"', parameters('keyVaultName'), '\\\"'), ' ', '-aadAppClientId', ' ', concat('\\\"', parameters('aadAppClientId'), '\\\"'))]",
+        "scriptContent": "param([string] $newPurviewAccountName = $newPurviewAccountName, [string] $keyVaultName = $keyVaultName, [string] $aadAppClientId = $aadAppClientId)\n\r$newPurviewAccountName\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\r$secret = Get-AzKeyVaultSecret -VaultName $keyVaultName -Name \"aadAppClientSecret\" -AsPlainText\n\r$PWord = ConvertTo-SecureString -String $secret -AsPlainText -Force\n\r$User = $aadAppClientId\n\r$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord\n\rConnect-AzAccount -Credential $Credential -Tenant 'b790f6ff-34c5-4074-bc2e-2f6be41e5870' -ServicePrincipal\n\rImport-Module -Name \"Az.Resources\" -Force\n\r$purviewResourceGroup=(Get-AzResource -Name $newPurviewAccountName).ResourceGroupName\n\rWrite-Output \"checkoutput\"$purviewResourceGroup\n\r$DeploymentScriptOutputs = @{}\n\r$DeploymentScriptOutputs['newPurviewResourceGroup'] = $purviewResourceGroup",
         "timeout": "PT1H",
         "cleanupPreference": "OnSuccess",
         "retentionInterval": "P1D"
@@ -67,8 +73,8 @@
       "properties": {
         "forceUpdateTag": "[parameters('utcValue')]",
         "azPowerShellVersion": "6.0",
-        "arguments": "[concat('-existingPurviewAccountName', ' ', concat('\\\"', parameters('existingPurviewAccountName'), '\\\"'))]",
-        "scriptContent": "param([string] $existingPurviewAccountName = $existingPurviewAccountName)\n\r$existingPurviewAccountName\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\r$PWord = ConvertTo-SecureString -String 'd-oOBlNI6fl~-eJSdI2Ib.fjb1_KKAr7B8' -AsPlainText -Force\n\r$User = \"8c6b5be6-2b3c-42d8-9295-e85abf1d2809\"\n\r$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord\n\rConnect-AzAccount -Credential $Credential -Tenant 'b790f6ff-34c5-4074-bc2e-2f6be41e5870' -ServicePrincipal\n\rImport-Module -Name \"Az.Resources\" -Force\n\r$purviewResourceGroup=(Get-AzResource -Name $existingPurviewAccountName).ResourceGroupName\n\rWrite-Output \"checkoutput\"$purviewResourceGroup\n\r$DeploymentScriptOutputs = @{}\n\r$DeploymentScriptOutputs['existingPurviewResourceGroup'] = $purviewResourceGroup",
+        "arguments": "[concat('-existingPurviewAccountName', ' ', concat('\\\"', parameters('existingPurviewAccountName'), '\\\"'), ' ', '-keyVaultName', ' ', concat('\\\"', parameters('keyVaultName'), '\\\"'), ' ', '-aadAppClientId', ' ', concat('\\\"', parameters('aadAppClientId'), '\\\"'))]",
+        "scriptContent": "param([string] $existingPurviewAccountName = $existingPurviewAccountName, [string] $keyVaultName = $keyVaultName, [string] $aadAppClientId = $aadAppClientId)\n\r$existingPurviewAccountName\n\rInstall-Module -Name \"Az.Accounts\" -Force\n\rInstall-Module -Name \"Az.Resources\" -Force\n\r$secret = Get-AzKeyVaultSecret -VaultName $keyVaultName -Name \"aadAppClientSecret\" -AsPlainText\n\r$PWord = ConvertTo-SecureString -String $secret -AsPlainText -Force\n\r$User = $aadAppClientId\n\r$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord\n\rConnect-AzAccount -Credential $Credential -Tenant 'b790f6ff-34c5-4074-bc2e-2f6be41e5870' -ServicePrincipal\n\rImport-Module -Name \"Az.Resources\" -Force\n\r$purviewResourceGroup=(Get-AzResource -Name $existingPurviewAccountName).ResourceGroupName\n\rWrite-Output \"checkoutput\"$purviewResourceGroup\n\r$DeploymentScriptOutputs = @{}\n\r$DeploymentScriptOutputs['existingPurviewResourceGroup'] = $purviewResourceGroup",
         "timeout": "PT1H",
         "cleanupPreference": "OnSuccess",
         "retentionInterval": "P1D"

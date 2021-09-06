@@ -288,7 +288,13 @@
             },
             "newOrExistingPurviewAccount": {
                 "value": "[parameters('newOrExistingPurviewAccount')]"
-            }
+            },
+            "keyvaultName": {
+                "value": "[variables('keyVaultName')]"
+            },
+            "aadAppClientId": {
+              "value": "[parameters('aadAppClientId')]"
+          }
         }
       }
     },
@@ -361,6 +367,7 @@
       "apiVersion": "2018-05-01",
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','purviewDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','getPurviewResourceGroupName')]",
         "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
@@ -406,6 +413,7 @@
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deployments','functionAppUpdateDeploymentWithNewPurviewAccount')]",
         "[resourceId('Microsoft.Resources/deployments','purviewDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','getPurviewResourceGroupName')]",
         "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]",
@@ -430,6 +438,8 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments','purviewDeployment')]",
+        "[resourceId('Microsoft.Resources/deployments','getPurviewResourceGroupName')]",
         "[resourceId('Microsoft.Resources/deployments','functionAppUpdateDeploymentWithNewPurviewAccount')]",
         "[resourceId('Microsoft.Resources/deployments','storageAccountDeployment')]",
         "[resourceId('Microsoft.Resources/deployments','datalakeAccountDeployment')]",
