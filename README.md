@@ -35,7 +35,6 @@ Use the OneClick Deployment button above to start the deployment. Currently it t
     * **Factory Name:** Name for the Azure Data Factory. This Data Factory will be created and load the data into the storage accounts.
     * **Aad App Client Id:** Client ID of the Application Registration created in prerequisite.
     * **Aad App Client Secret:** Client Secret of the Application Registration created in prerequisite.
-    * **Location:** Location where the resources will be deployed. It is, by default, set to the region of the resource group.
 
 ## Prerequisites
 
