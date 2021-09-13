@@ -11,7 +11,7 @@ Azure Purview accounts are created using ARM templates and are configured by usi
 * [Introduction](#introduction)
 * [Prerequisites](#prerequisites)
 * [Post Deployment](#post-deployment)
-* [Removing the QuickStart resources from the Purview Account](#removing-the-quickstart-resources-from-the-purview-account)
+* [Optional: Removing the QuickStart resources from the Purview Account](#optional:-removing-the-quickstart-resources-from-the-purview-account)
 * [Troubleshooting](#troubleshooting)
 
 ## Introduction
@@ -245,7 +245,7 @@ After the deployment is complete, follow the steps given below to view the artif
   <img src="./images/post-deployment/7-b.PNG">
 </p>
 
-## Removing the QuickStart resources from the Purview Account
+## Optional Step: Removing the QuickStart resources from the Purview Account
 
 The complete procedure to remove the created resources is shown below:-
 
